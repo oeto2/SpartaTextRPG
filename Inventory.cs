@@ -93,6 +93,24 @@ namespace SpartaTextRPG
             }
         }
 
+        //아이템 장착
+        public void EquipItem(string _name)
+        {
+            switch (_name)
+            {
+                case "무쇠갑옷":
+                    inven.Add(item[0]);
+                    break;
+                case "스파르타의 창":
+                    inven.Add(item[1]);
+                    break;
+                case "낡은 검":
+                    inven.Add(item[2]);
+                    break;
+            }
+        }
+
+
         //현재 인벤토리 보여주기
         public void PrintInventory()
         {
@@ -129,6 +147,42 @@ namespace SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
+        }
+
+        //장비 장착 화면
+        public void PrintEquipment()
+        {
+            Console.Clear();
+            Console.WriteLine("장비장착");
+            Console.WriteLine("원하는 아이템을 장착할 수 있습니다.");
+            Console.WriteLine();
+            Console.WriteLine("[아이템 목록]");
+
+            //아이템 보유 목록
+            foreach (var item in inven)
+            {
+                int count = 1;
+                switch (item.type)
+                {
+                    default:
+                        break;
+
+                    //무기일 경우
+                    case "W":
+                        Console.WriteLine("{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info);
+                        continue;
+
+                    //방어구일 경우
+                    case "A":
+                        Console.WriteLine("{0} | 방어력 +{1} | {2}", item.name, item.defens, item.info);
+                        continue;
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("장착하고 싶은 아이템의 이름을 입력하세요.");
+            Console.Write(">>");
+            string input = Console.ReadLine();
         }
     }
 }

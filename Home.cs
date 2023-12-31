@@ -33,7 +33,7 @@ namespace SpartaTextRPG
             bool isHome = false;
             bool isState = false;
             bool isInven = false;
-
+            bool isEquipment = false;
 
             //게임 시작
             while (true)
@@ -82,7 +82,6 @@ namespace SpartaTextRPG
                         isHome = false;
                         isInven = false;
 
-
                         //상태 창 입력 값
                         int stateInput = 0;
 
@@ -119,13 +118,29 @@ namespace SpartaTextRPG
                         if (CheckInput(InvenInput))
                         {
                             system.isInputWrong = false;
-                            input = InvenInput;
+
+                            //입력값에 따른 선택지
+                            switch (InvenInput)
+                            {
+                                //나가기
+                                case 0:
+                                    input = InvenInput;
+                                    break;
+
+                                //장비 장착창 진입
+                                case 1:
+                                    inven.PrintEquipment();
+                                    int equipInput = int.Parse(Console.ReadLine());
+                                    break;
+                            }
                         }
                         else
                         {
                             system.isInputWrong = true;
                             input = 2;
                         }
+
+                        
 
                         break;
 
@@ -183,7 +198,7 @@ namespace SpartaTextRPG
                 //인벤토리일 경우
                 else if (isInven)
                 {
-                    if (_input == 0)
+                    if (_input == 0 || _input == 1)
                         return true;
                     else
                         return false;

@@ -12,3 +12,4 @@ C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\n
 C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\net6.0\SpartaTextRPG.pdb
 C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\net6.0\SpartaTextRPG.genruntimeconfig.cache
 C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\net6.0\ref\SpartaTextRPG.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\net6.0\SpartaTextRPG.sourcelink.json
