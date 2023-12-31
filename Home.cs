@@ -128,43 +128,6 @@ namespace SpartaTextRPG
                 }
                 return 0;
             }
-
-            //입력이 재대로 됐는지 확인하는 함수
-            bool CheckInput(int _input)
-            {
-                //홈 화면일 경우
-                if (isHome)
-                {
-                    if (_input > 0 && _input <= 4)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                //상태창 일 경우
-                else if (isState)
-                {
-                    if (_input == 0)
-                        return true;
-                    else
-                        return false;
-                }
-                //인벤토리일 경우
-                else if (isInven)
-                {
-                    if (_input == 0 || _input == 1)
-                        return true;
-                    else
-                        return false;
-                }
-                else
-                {
-                    return false;
-                }
-            }
         }
 
         //공백을 입력했는지

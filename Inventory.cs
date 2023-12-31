@@ -435,7 +435,8 @@ namespace SpartaTextRPG
                     {
                         //나가기
                         case 0:
-                            return 0;
+                            PrintInventory();
+                            break;
                     }
                 }
             }
@@ -499,7 +500,8 @@ namespace SpartaTextRPG
                     {
                         //나가기
                         case 0:
-                            return 0;
+                            PrintInventory();
+                            break;
                     }
                 }
             }
