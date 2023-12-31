@@ -10,6 +10,8 @@ namespace SpartaTextRPG
     //플레이어의 정보 클래스
     public class Player
     {
+        Home home = new Home();
+
         public int level = 1;
         public string playerClass = "모험가";
         public int attack = 0;
@@ -45,12 +47,17 @@ namespace SpartaTextRPG
             Console.WriteLine("원하시는 행동을 입력해주세요");
             Console.Write(">>");
 
-            int input = int.Parse(Console.ReadLine());
+            string input = Console.ReadLine();
 
-            switch(input)
+            if (home.CheckNullEnter(input))
+                return 1;
+            else
             {
-                case 0:
-                    return input;
+                switch (int.Parse(input))
+                {
+                    case 0:
+                        return int.Parse(input);
+                }
             }
 
             return 1;

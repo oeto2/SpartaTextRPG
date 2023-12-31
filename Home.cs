@@ -58,9 +58,12 @@ namespace SpartaTextRPG
 
                         //홈 화면 입력 값
                         int homeInput;
+                        string strInput;
 
                         //메뉴 출력
                         input = ShowMenu();
+
+
                         break;
 
                     //상태 창
@@ -105,20 +108,28 @@ namespace SpartaTextRPG
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
 
-                int input =  int.Parse(Console.ReadLine());
+                string input = Console.ReadLine();
 
-                switch (input)
+                //Null입력 체크
+                if (home.CheckNullEnter(input))
+                    return 0;
+                else
                 {
-                    case 1:
-                        return input;
-                    case 2:
-                        return input;
-                    case 3:
-                        return input;
-                    default:
-                        break;
+                    switch (int.Parse(input))
+                    {
+                        //상태 창 이동
+                        case 1:
+                            return int.Parse(input);
+                        // 인벤토리 창 이동
+                        case 2:
+                            return int.Parse(input);
+                        //상점 창 이동
+                        case 3:
+                            return int.Parse(input);
+                        default:
+                            break;
+                    }
                 }
-
                 return 0;
             }
 
@@ -157,9 +168,20 @@ namespace SpartaTextRPG
                 {
                     return false;
                 }
-
             }
         }
 
+        //공백을 입력했는지
+        public bool CheckNullEnter(string _input)
+        {
+            switch (_input)
+            {
+                case "":
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
     }
 }
