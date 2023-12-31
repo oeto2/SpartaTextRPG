@@ -23,6 +23,7 @@ namespace SpartaTextRPG
             //인벤토리
             Inventory inven = new Inventory();
 
+
             int input = 0;
 
             //처음 시작했는지
@@ -42,6 +43,7 @@ namespace SpartaTextRPG
                 {
                     inven.SetItemInfo(); //아이템 정보 업데이트
                     inven.GetStartItmes(); //시작 아이템 획득
+                    Shop.instance.UpdateProduct(); //상점 아이템 리스트 업데이트
                     isFirst = false;
                 }
 
@@ -61,9 +63,16 @@ namespace SpartaTextRPG
                         input = player.PrintPlayerInfo();
                         break;
 
+                    //인벤토리
                     case 2:
                         //인벤토리 정보 출력
                         input = inven.PrintInventory();
+                        break;
+
+                    //상점
+                    case 3:
+                        //상점 정보 출력
+                        input = Shop.instance.PrintShop();
                         break;
                 }
             }
@@ -86,7 +95,7 @@ namespace SpartaTextRPG
                 }
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
-                
+
 
                 string input = Console.ReadLine();
 
@@ -101,14 +110,17 @@ namespace SpartaTextRPG
                         case 1:
                             System_.instance.isInputWrong = false;
                             return int.Parse(input);
+
                         // 인벤토리 창 이동
                         case 2:
                             System_.instance.isInputWrong = false;
                             return int.Parse(input);
+
                         //상점 창 이동
                         case 3:
                             System_.instance.isInputWrong = false;
                             return int.Parse(input);
+
                         default:
                             System_.instance.isInputWrong = true;
                             break;
@@ -161,7 +173,7 @@ namespace SpartaTextRPG
             int intInput;
             bool isInt = int.TryParse(_input, out intInput);
 
-            if(!isInt)
+            if (!isInt)
             {
                 System_.instance.isInputWrong = true;
                 return true;

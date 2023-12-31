@@ -30,6 +30,9 @@ namespace SpartaTextRPG
     //아이템 창
     internal class Inventory
     {
+        //싱글톤
+        public static Inventory instance = new Inventory();
+
         Home home = new Home();
 
         //종합 인벤토리
@@ -39,8 +42,6 @@ namespace SpartaTextRPG
         //방어구 인벤토리
         public List<Item> inven_A = new List<Item>();
 
-        public Item item2 = new Item();
-
         public Item[] item = new Item[10];
 
         //게임에서 사용될 아이템 정보 업데이트
@@ -49,26 +50,62 @@ namespace SpartaTextRPG
             //Class 배열 초기화
             for (int i = 0; i < item.Length; i++)
             {
-                item[i] = new Item();
+                instance.item[i] = new Item();
             }
 
-            item[0].name = "무쇠 갑옷";
-            item[0].defens = 5;
-            item[0].price = 500;
-            item[0].info = "무쇠로 만들어져 튼튼한 갑옷입니다.";
-            item[0].type = "A";
+            instance.item[0].name = "무쇠 갑옷";
+            instance.item[0].defens = 5;
+            instance.item[0].price = 500;
+            instance.item[0].info = "무쇠로 만들어져 튼튼한 갑옷입니다.";
+            instance.item[0].type = "A";
 
-            item[1].name = "스파르타의 창";
-            item[1].damage = 7;
-            item[1].price = 1000;
-            item[1].info = "스파르타의 전사들이 사용했다는 전설의 창입니다.";
-            item[1].type = "W";
+            instance.item[1].name = "스파르타의 창";
+            instance.item[1].damage = 7;
+            instance.item[1].price = 1000;
+            instance.item[1].info = "스파르타의 전사들이 사용했다는 전설의 창입니다.";
+            instance.item[1].type = "W";
 
-            item[2].name = "낡은 검";
-            item[2].damage = 2;
-            item[2].price = 100;
-            item[2].info = "쉽게 볼 수 있는 낡은 검 입니다.";
-            item[2].type = "W";
+            instance.item[2].name = "낡은 검";
+            instance.item[2].damage = 2;
+            instance.item[2].price = 100;
+            instance.item[2].info = "쉽게 볼 수 있는 낡은 검 입니다.";
+            instance.item[2].type = "W";
+
+            instance.item[3].name = "수련자의 갑옷";
+            instance.item[3].defens = 5;
+            instance.item[3].price = 1000;
+            instance.item[3].info = "수련에 도움을 주는 갑옷입니다.";
+            instance.item[3].type = "A";
+
+            instance.item[4].name = "무쇠 갑옷";
+            instance.item[4].defens = 9;
+            instance.item[4].price = 2000;
+            instance.item[4].info = "수련에 도움을 주는 갑옷입니다.";
+            instance.item[4].type = "A";
+
+            instance.item[5].name = "스파르타 갑옷";
+            instance.item[5].defens = 9;
+            instance.item[5].price = 3500;
+            instance.item[5].info = "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.";
+            instance.item[5].type = "A";
+
+            instance.item[6].name = "낡은 검";
+            instance.item[6].damage = 2;
+            instance.item[6].price = 600;
+            instance.item[6].info = "쉽게 볼 수 있는 낡은 검 입니다.";
+            instance.item[6].type = "W";
+
+            instance.item[7].name = "청동 도끼";
+            instance.item[7].damage = 5;
+            instance.item[7].price = 1500;
+            instance.item[7].info = "어디선가 사용됐던거 같은 도끼입니다.";
+            instance.item[7].type = "W";
+
+            instance.item[8].name = "스파르타의 창";
+            instance.item[8].damage = 7;
+            instance.item[8].price = 3000;
+            instance.item[8].info = "스파르타의 전사들이 사용했다는 전설의 창입니다.";
+            instance.item[8].type = "W";
         }
 
         //시작 아이템 획득
@@ -76,9 +113,9 @@ namespace SpartaTextRPG
         {
             int count = 0;
             count++;
-            inven.Add(item[0]);
-            inven.Add(item[1]);
-            inven.Add(item[2]);
+            instance.inven.Add(instance.item[0]);
+            instance.inven.Add(instance.item[1]);
+            instance.inven.Add(instance.item[2]);
 
             UpdateInven_W();
             UpdateInven_A();
@@ -87,11 +124,11 @@ namespace SpartaTextRPG
         //무기 리스트 갱신
         public void UpdateInven_W()
         {
-            foreach (Item i in inven)
+            foreach (Item i in instance.inven)
             {
                 if (i.type == "W")
                 {
-                    inven_W.Add(i);
+                    instance.inven_W.Add(i);
                 }
             }
         }
@@ -99,11 +136,11 @@ namespace SpartaTextRPG
         //방어구 리스트 갱신
         public void UpdateInven_A()
         {
-            foreach (Item i in inven)
+            foreach (Item i in instance.inven)
             {
                 if (i.type == "A")
                 {
-                    inven_A.Add(i);
+                    instance.inven_A.Add(i);
                 }
             }
         }
@@ -114,25 +151,16 @@ namespace SpartaTextRPG
             switch (_name)
             {
                 case "무쇠갑옷":
-                    inven.Add(item[0]);
+                    instance.inven.Add(item[0]);
                     break;
                 case "스파르타의 창":
-                    inven.Add(item[1]);
+                    instance.inven.Add(item[1]);
                     break;
                 case "낡은 검":
-                    inven.Add(item[2]);
+                    instance.inven.Add(item[2]);
                     break;
             }
         }
-
-        //장착중인 아이템인지 체크
-        public void CheckEquipItem(string _itemName, string _itemType)
-        {
-            foreach (Item i in inven)
-            {
-            }
-        }
-
 
 
         //아이템 장착
@@ -149,7 +177,7 @@ namespace SpartaTextRPG
             if (_itemType == "W")
             {
                 //장착할 무기
-                Item weapon = inven_W[i];
+                Item weapon = instance.inven_W[i];
 
                 //이미 장착중인 아이템이 존재한다면
                 if (weapon.name.Contains("[E]"))
@@ -161,14 +189,14 @@ namespace SpartaTextRPG
                     weapon.name = itemName[1];
 
                     //해당 아이템 장착 해제
-                    inven_W[i].name = weapon.name;
+                    instance.inven_W[i].name = weapon.name;
                     Player.instance.weapon = "미착용";
                     Player.instance.damage = 0;
                 }
                 else
                 {
                     //착용전에 장착중인 아이템이 존재하는지 확인
-                    foreach (Item item in inven_W)
+                    foreach (Item item in instance.inven_W)
                     {
                         //장착중인 아이템이 존재한다면
                         if (item.name.Contains("[E]"))
@@ -179,19 +207,19 @@ namespace SpartaTextRPG
                             string reName = itemName[1];
 
                             //현재 장착중인 아이템 해제
-                            for (int j = 0; j < inven_W.Count; j++)
+                            for (int j = 0; j < instance.inven_W.Count; j++)
                             {
-                                if (inven_W[j].name == findItem.name)
+                                if (instance.inven_W[j].name == findItem.name)
                                 {
-                                    inven_W[j].name = reName;
+                                    instance.inven_W[j].name = reName;
                                 }
                             }
                         }
                     }
 
-                    inven_W[i].name = "[E]" + inven_W[i].name;
-                    Player.instance.weapon = inven_W[i].name;
-                    Player.instance.damage = inven_W[i].damage;
+                    instance.inven_W[i].name = "[E]" + instance.inven_W[i].name;
+                    Player.instance.weapon = instance.inven_W[i].name;
+                    Player.instance.damage = instance.inven_W[i].damage;
                 }
             }
 
@@ -199,7 +227,7 @@ namespace SpartaTextRPG
             else if (_itemType == "A")
             {
                 //장착할 방어구
-                Item armor = inven_A[i];
+                Item armor = instance.inven_A[i];
 
                 //이미 장착중인 아이템이 존재한다면
                 if (armor.name.Contains("[E]"))
@@ -211,14 +239,14 @@ namespace SpartaTextRPG
                     armor.name = itemName[1];
 
                     //해당 아이템 장착 해제
-                    inven_A[i].name = armor.name;
+                    instance.inven_A[i].name = armor.name;
                     Player.instance.armor = "미착용";
                     Player.instance.defence = 0;
                 }
                 else
                 {
                     //착용전에 장착중인 아이템이 존재하는지 확인
-                    foreach (Item item in inven_A)
+                    foreach (Item item in instance.inven_A)
                     {
                         //장착중인 아이템이 존재한다면
                         if (item.name.Contains("[E]"))
@@ -229,18 +257,18 @@ namespace SpartaTextRPG
                             string reName = itemName[1];
 
                             //현재 장착중인 아이템 해제
-                            for (int j = 0; j < inven_A.Count; j++)
+                            for (int j = 0; j < instance.inven_A.Count; j++)
                             {
-                                if (inven_A[j].name == findItem.name)
+                                if (instance.inven_A[j].name == findItem.name)
                                 {
-                                    inven_A[j].name = reName;
+                                    instance.inven_A[j].name = reName;
                                 }
                             }
                         }
                     }
-                    inven_A[i].name = "[E]" + inven_A[i].name;
-                    Player.instance.armor = inven_A[i].name;
-                    Player.instance.defence = inven_A[i].defens;
+                    instance.inven_A[i].name = "[E]" + instance.inven_A[i].name;
+                    Player.instance.armor = instance.inven_A[i].name;
+                    Player.instance.defence = instance.inven_A[i].defens;
                 }
             }
         }
@@ -257,7 +285,7 @@ namespace SpartaTextRPG
             Console.WriteLine("[아이템 목록]");
 
             //아이템 보유 목록
-            foreach (var item in inven)
+            foreach (var item in instance.inven)
             {
                 switch (item.type)
                 {
@@ -266,12 +294,12 @@ namespace SpartaTextRPG
 
                     //무기일 경우
                     case "W":
-                        Console.WriteLine("{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info);
+                        Console.WriteLine("- {0} | 공격력 +{1} | {2}", item.name, item.damage, item.info);
                         continue;
 
                     //방어구일 경우
                     case "A":
-                        Console.WriteLine("{0} | 방어력 +{1} | {2}", item.name, item.defens, item.info);
+                        Console.WriteLine("- {0} | 방어력 +{1} | {2}", item.name, item.defens, item.info);
                         continue;
                 }
             }
@@ -324,7 +352,7 @@ namespace SpartaTextRPG
 
             if (_itemType == "W")
             {
-                foreach (Item i in inven)
+                foreach (Item i in instance.inven)
                 {
                     //해당 인덱스를 가진 아이템이 존재한다면
                     if (weapone_i == _itemNum)
@@ -337,7 +365,7 @@ namespace SpartaTextRPG
 
             else if (_itemType == "A")
             {
-                foreach (Item i in inven)
+                foreach (Item i in instance.inven)
                 {
                     //해당 인덱스를 가진 아이템이 존재한다면
                     if (armor_i == _itemNum)
@@ -363,11 +391,11 @@ namespace SpartaTextRPG
             int weaponCount = 1;
 
             //무기 아이템 보유 목록
-            foreach (var item in inven)
+            foreach (var item in instance.inven)
             {
                 if (item.type == "W")
                 {
-                    Console.WriteLine("{3}.{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info, weaponCount);
+                    Console.WriteLine("- {3}.{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info, weaponCount);
                     weaponCount++;
                 }
             }
@@ -428,11 +456,11 @@ namespace SpartaTextRPG
             int armorCount = 1;
 
             //방어구 아이템 보유 목록
-            foreach (var item in inven)
+            foreach (var item in instance.inven)
             {
                 if (item.type == "A")
                 {
-                    Console.WriteLine("{3}.{0} | 방어력 +{1} | {2}", item.name, item.defens, item.info, armorCount);
+                    Console.WriteLine("- {3}.{0} | 방어력 +{1} | {2}", item.name, item.defens, item.info, armorCount);
                     armorCount++;
                 }
             }
