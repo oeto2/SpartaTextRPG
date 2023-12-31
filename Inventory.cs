@@ -35,9 +35,6 @@ namespace SpartaTextRPG
 
         public Item[] item = new Item[10];
 
-        //캐릭터 정보
-        Player player = new Player();
-
         //게임에서 사용될 아이템 정보 업데이트
         public void SetItemInfo()
         {
@@ -93,6 +90,14 @@ namespace SpartaTextRPG
             }
         }
 
+        //장착중인 아이템인지 체크
+        public void CheckEquipItem(string _itemName, string _itemType)
+        {
+            foreach(Item i in inven)
+            {
+            }
+        }
+
         //아이템 장착
         public void EquipItem(string _name)
         {
@@ -100,12 +105,32 @@ namespace SpartaTextRPG
             {
                 case "무쇠 갑옷":
                     item[0].name = "[E]" + item[0].name;
+                    Player.instance.armor = item[0].name;
+                    Player.instance.defence += item[0].defens;
+                    Player.instance.equipArmorNum++;
                     break;
+
                 case "스파르타의 창":
+                    //이미 착용중인 아이템이 있다면
+                    if(Player.instance.equipArmorNum == 1)
+                    {
+                        //해당아이템을 장착해제 후 변경
+                    }
+                    else
+                    {
+
+                    }
+
                     item[1].name = "[E]" + item[1].name;
+                        Player.instance.weapon = item[1].name;
+                        Player.instance.attack = item[1].damage;
+                        Player.instance.equipWeponNum++;
                     break;
                 case "낡은 검":
                     item[2].name = "[E]" + item[2].name;
+                    Player.instance.weapon = item[2].name;
+                    Player.instance.attack = item[2].damage;
+                    Player.instance.equipWeponNum++;
                     break;
             }
         }
@@ -157,13 +182,12 @@ namespace SpartaTextRPG
 
                 //장착관리
                 case 1:
-                    bool isEquipt = PrintEquipment();
+                    bool isEquipt = PrintEquipment(false);
                     //장착 성공시
                     if (isEquipt)
                         return 2;
                     break;
             }
-
             return 2;
         }
 
@@ -182,10 +206,11 @@ namespace SpartaTextRPG
         }
 
         //장비 장착 화면
-        public bool PrintEquipment()
+        public bool PrintEquipment(bool inputWrong)
         {
             Console.Clear();
             Console.WriteLine("장비장착");
+            Console.WriteLine();
             Console.WriteLine("원하는 아이템을 장착할 수 있습니다.");
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
@@ -210,10 +235,17 @@ namespace SpartaTextRPG
                         continue;
                 }
             }
-
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            if(inputWrong)
+            {
+                Console.WriteLine();
+                Console.Write("******해당 아이템을 보유하고 있지 않습니다!******");
+            }
             Console.WriteLine();
             Console.WriteLine("장착하고 싶은 아이템의 이름을 입력하세요.");
             Console.Write(">>");
+
             string input = Console.ReadLine();
 
             //해당 아이템을 가지고 있는지 확인
@@ -223,6 +255,14 @@ namespace SpartaTextRPG
                 //해당아이템 장착
                 EquipItem(input);
                 return true;
+            }
+            else if(0 == int.Parse(input))
+            {
+                return true;
+            }
+            else
+            {
+                PrintEquipment(true);
             }
 
             return false;
