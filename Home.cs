@@ -62,8 +62,6 @@ namespace SpartaTextRPG
 
                         //메뉴 출력
                         input = ShowMenu();
-
-
                         break;
 
                     //상태 창

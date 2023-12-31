@@ -14,7 +14,7 @@ namespace SpartaTextRPG
 
         public int level = 1;
         public string playerClass = "모험가";
-        public int attack = 0;
+        public int damage = 0;
         public int defence = 0;
         public int hp = 10;
         public int gold = 0;
@@ -31,11 +31,12 @@ namespace SpartaTextRPG
             Console.Clear();
 
             Console.WriteLine("상태보기");
+            Console.WriteLine();
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
             Console.WriteLine("Lv. {0}", instance.level);
             Console.WriteLine("직업: {0}", instance.playerClass);
-            Console.WriteLine("공격력: {0}", instance.attack);
+            Console.WriteLine("공격력: {0}", instance.damage);
             Console.WriteLine("방어력: {0}", instance.defence);
             Console.WriteLine("체력: {0}", instance.hp);
             Console.WriteLine("Gold: {0}", instance.gold);
