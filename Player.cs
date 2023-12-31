@@ -19,7 +19,7 @@ namespace SpartaTextRPG
         public string weapon = "스파르타의 창";
         public string armor = "무쇠갑옷";
 
-        public void PrintPlayerInfo(bool _isInputWrong)
+        public int PrintPlayerInfo()
         {
             Console.Clear();
 
@@ -40,11 +40,15 @@ namespace SpartaTextRPG
             Console.WriteLine("원하시는 행동을 입력해주세요");
             Console.Write(">>");
 
-            if (_isInputWrong)
+            int input = int.Parse(Console.ReadLine());
+
+            switch(input)
             {
-                Console.WriteLine("************************");
-                Console.WriteLine("잘못된 입력입니다!");
+                case 0:
+                    return input;
             }
+
+            return 1;
         }
     }
 }

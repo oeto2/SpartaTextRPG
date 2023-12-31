@@ -60,20 +60,7 @@ namespace SpartaTextRPG
                         int homeInput;
 
                         //메뉴 출력
-                        ShowMenu();
-                        homeInput = int.Parse(Console.ReadLine());
-
-                        //입력 체크
-                        if (CheckInput(homeInput))
-                        {
-                            system.isInputWrong = false;
-                            input = homeInput;
-                        }
-                        else
-                        {
-                            system.isInputWrong = true;
-                            input = 0;
-                        }
+                        input = ShowMenu();
                         break;
 
                     //상태 창
@@ -86,20 +73,7 @@ namespace SpartaTextRPG
                         int stateInput = 0;
 
                         //플레이어 정보 출력
-                        player.PrintPlayerInfo(system.isInputWrong);
-                        stateInput = int.Parse(Console.ReadLine());
-
-                        //입력 체크
-                        if (CheckInput(stateInput))
-                        {
-                            system.isInputWrong = false;
-                            input = stateInput;
-                        }
-                        else
-                        {
-                            system.isInputWrong = true;
-                            input = 1;
-                        }
+                        input = player.PrintPlayerInfo();
                         break;
 
                     case 2:
@@ -111,49 +85,13 @@ namespace SpartaTextRPG
                         int InvenInput = 0;
 
                         //인벤 정보 출력
-                        inven.PrintInventory();
-                        InvenInput = int.Parse(Console.ReadLine());
-
-                        //입력 체크
-                        if (CheckInput(InvenInput))
-                        {
-                            system.isInputWrong = false;
-
-                            //입력값에 따른 선택지
-                            switch (InvenInput)
-                            {
-                                //나가기
-                                case 0:
-                                    input = InvenInput;
-                                    break;
-
-                                //장비 장착창 진입
-                                case 1:
-                                    inven.PrintEquipment();
-                                    int equipInput = int.Parse(Console.ReadLine());
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            system.isInputWrong = true;
-                            input = 2;
-                        }
-
-                        
-
-                        break;
-
-                    case 3:
-                        break;
-
-                    case 4:
+                        input = inven.PrintInventory();
                         break;
                 }
             }
 
             //메뉴 보여주기
-            void ShowMenu()
+            int ShowMenu()
             {
                 Console.Clear();
 
@@ -163,14 +101,26 @@ namespace SpartaTextRPG
                 Console.WriteLine("1. 상태 보기");
                 Console.WriteLine("2. 인벤토리");
                 Console.WriteLine("3. 상점");
+                Console.WriteLine();
+                Console.WriteLine("원하시는 행동을 입력해주세요.");
+                Console.Write(">>");
 
-                if (system.isInputWrong)
+                int input =  int.Parse(Console.ReadLine());
+
+                switch (input)
                 {
-                    Console.WriteLine("************************");
-                    Console.WriteLine("잘못된 입력입니다!");
+                    case 1:
+                        return input;
+                    case 2:
+                        return input;
+                    case 3:
+                        return input;
+                    default:
+                        break;
                 }
-            }
 
+                return 0;
+            }
 
             //입력이 재대로 됐는지 확인하는 함수
             bool CheckInput(int _input)

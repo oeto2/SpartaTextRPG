@@ -42,7 +42,7 @@ namespace SpartaTextRPG
         public void SetItemInfo()
         {
             //Class 배열 초기화
-            for(int i=0; i < item.Length; i++)
+            for (int i = 0; i < item.Length; i++)
             {
                 item[i] = new Item();
             }
@@ -70,7 +70,7 @@ namespace SpartaTextRPG
         public void GetStartItmes()
         {
             int count = 0;
-            count ++;
+            count++;
             inven.Add(item[0]);
             inven.Add(item[1]);
             inven.Add(item[2]);
@@ -79,7 +79,7 @@ namespace SpartaTextRPG
         //아이템 획득
         public void GetItem(string _name)
         {
-            switch(_name)
+            switch (_name)
             {
                 case "무쇠갑옷":
                     inven.Add(item[0]);
@@ -98,21 +98,21 @@ namespace SpartaTextRPG
         {
             switch (_name)
             {
-                case "무쇠갑옷":
-                    inven.Add(item[0]);
+                case "무쇠 갑옷":
+                    item[0].name = "[E]" + item[0].name;
                     break;
                 case "스파르타의 창":
-                    inven.Add(item[1]);
+                    item[1].name = "[E]" + item[1].name;
                     break;
                 case "낡은 검":
-                    inven.Add(item[2]);
+                    item[2].name = "[E]" + item[2].name;
                     break;
             }
         }
 
 
         //현재 인벤토리 보여주기
-        public void PrintInventory()
+        public int PrintInventory()
         {
             Console.Clear();
             Console.WriteLine("인벤토리");
@@ -124,7 +124,7 @@ namespace SpartaTextRPG
             //아이템 보유 목록
             foreach (var item in inven)
             {
-                switch(item.type)
+                switch (item.type)
                 {
                     default:
                         break;
@@ -147,10 +147,42 @@ namespace SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
+            int input = int.Parse(Console.ReadLine());
+
+            switch (input)
+            {
+                //나가기
+                case 0:
+                    return input;
+
+                //장착관리
+                case 1:
+                    bool isEquipt = PrintEquipment();
+                    //장착 성공시
+                    if (isEquipt)
+                        return 2;
+                    break;
+            }
+
+            return 2;
+        }
+
+        //아이템을 보유하고 있는지 체크
+        public bool CheckHaveItem(string _itemName)
+        {
+            foreach (Item i in inven)
+            {
+                if (i.name == _itemName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         //장비 장착 화면
-        public void PrintEquipment()
+        public bool PrintEquipment()
         {
             Console.Clear();
             Console.WriteLine("장비장착");
@@ -183,6 +215,17 @@ namespace SpartaTextRPG
             Console.WriteLine("장착하고 싶은 아이템의 이름을 입력하세요.");
             Console.Write(">>");
             string input = Console.ReadLine();
+
+            //해당 아이템을 가지고 있는지 확인
+            bool isHave = CheckHaveItem(input);
+            if (isHave)
+            {
+                //해당아이템 장착
+                EquipItem(input);
+                return true;
+            }
+
+            return false;
         }
     }
 }
