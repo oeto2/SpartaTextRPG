@@ -281,6 +281,10 @@ namespace SpartaTextRPG
             Console.WriteLine("1. 무기 장착");
             Console.WriteLine("2. 방어구 장착");
             Console.WriteLine();
+            if (System_.instance.isInputWrong)
+            {
+                Console.WriteLine("******잘못된 입력입니다!*******");
+            }
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
             string input = Console.ReadLine();
@@ -303,6 +307,10 @@ namespace SpartaTextRPG
                     case 2:
                         int aEquipInput = PrintArmorEquipment();
                         return aEquipInput;
+
+                    default:
+                        System_.instance.isInputWrong = true;
+                        break;
                 }
             }
             return 2;
@@ -342,44 +350,6 @@ namespace SpartaTextRPG
             return false;
         }
 
-        //장비 장착 초이스 화면
-        public int PrintSelectEquip()
-        {
-            Console.Clear();
-            Console.WriteLine("장비장착");
-            Console.WriteLine();
-            Console.WriteLine("어느 타입의 장비를 장착하시겠습니까?");
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
-            Console.WriteLine("1. 무기");
-            Console.WriteLine("2. 방어구");
-            Console.WriteLine();
-            Console.WriteLine("원하시는 장비 타입을 입력해주세요.");
-            Console.Write(">>");
-            string input = Console.ReadLine();
-            if (home.CheckNullEnter(input))
-                return 0;
-            else
-            {
-                switch (int.Parse(input))
-                {
-                    //나가기
-                    case 0:
-                        return int.Parse(input);
-
-                    //무기 장착화면 이동
-                    case 1:
-                        return 1;
-
-                    //방어구 장착화면 이동
-                    case 2:
-                        return 2;
-                }
-            }
-            return 2;
-
-        }
-
         //무기 장착 화면
         public int PrintWeaponeEquipment()
         {
@@ -404,6 +374,10 @@ namespace SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
+            if (System_.instance.isInputWrong)
+            {
+                Console.WriteLine("******잘못된 입력입니다!*******");
+            }
             Console.WriteLine("장착하고 싶은 아이템의 번호를 입력하세요.");
             Console.Write(">>");
 
@@ -456,6 +430,10 @@ namespace SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
+            if (System_.instance.isInputWrong)
+            {
+                Console.WriteLine("******잘못된 입력입니다!*******");
+            }
             Console.WriteLine("장착하고 싶은 아이템의 번호를 입력하세요.");
             Console.Write(">>");
 

@@ -4,19 +4,18 @@ using static SpartaTextRPG.Home;
 
 namespace SpartaTextRPG
 {
+    //시스템
+    public class System_
+    {
+        public static System_ instance = new System_();
+        //입력 값이 잘못되었는지
+        public bool isInputWrong = false;
+    }
+
     internal class Home
     {
-        //시스템
-        public class System
-        {
-            //입력 값이 잘못되었는지
-            public bool isInputWrong = false;
-        }
-
         static void Main(string[] args)
         {
-            //시스템
-            System system = new System();
             //홈 클래스
             Home home = new Home();
             //캐릭터 클래스
@@ -61,7 +60,7 @@ namespace SpartaTextRPG
                         string strInput;
 
                         //메뉴 출력
-                        input = ShowMenu();
+                        input = ShowMenu(false);
                         break;
 
                     //상태 창
@@ -92,7 +91,7 @@ namespace SpartaTextRPG
             }
 
             //메뉴 보여주기
-            int ShowMenu()
+            int ShowMenu(bool isWrong)
             {
                 Console.Clear();
 
@@ -103,8 +102,13 @@ namespace SpartaTextRPG
                 Console.WriteLine("2. 인벤토리");
                 Console.WriteLine("3. 상점");
                 Console.WriteLine();
+                if (System_.instance.isInputWrong)
+                {
+                    Console.WriteLine("******잘못된 입력입니다!*******");
+                }
                 Console.WriteLine("원하시는 행동을 입력해주세요.");
                 Console.Write(">>");
+                
 
                 string input = Console.ReadLine();
 
@@ -117,14 +121,18 @@ namespace SpartaTextRPG
                     {
                         //상태 창 이동
                         case 1:
+                            System_.instance.isInputWrong = false;
                             return int.Parse(input);
                         // 인벤토리 창 이동
                         case 2:
+                            System_.instance.isInputWrong = false;
                             return int.Parse(input);
                         //상점 창 이동
                         case 3:
+                            System_.instance.isInputWrong = false;
                             return int.Parse(input);
                         default:
+                            System_.instance.isInputWrong = true;
                             break;
                     }
                 }
@@ -172,12 +180,22 @@ namespace SpartaTextRPG
         //공백을 입력했는지
         public bool CheckNullEnter(string _input)
         {
+            int intInput;
+            bool isInt = int.TryParse(_input, out intInput);
+
+            if(!isInt)
+            {
+                System_.instance.isInputWrong = true;
+                return true;
+            }
+
             switch (_input)
             {
                 case "":
                     return true;
 
                 default:
+                    System_.instance.isInputWrong = false;
                     return false;
             }
         }
