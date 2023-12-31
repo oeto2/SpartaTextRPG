@@ -151,12 +151,44 @@ namespace SpartaTextRPG
                 //장착할 무기
                 Item weapon = inven_W[i];
 
+                //이미 장착중인 아이템이 존재한다면
                 if (weapon.name.Contains("[E]"))
                 {
                     alreadyEquip_W = true;
+                    string[] itemName = weapon.name.Split("[E]");
+
+                    //이름 변경
+                    weapon.name = itemName[1];
+
+                    //해당 아이템 장착 해제
+                    inven_W[i].name = weapon.name;
+                    Player.instance.weapon = "미착용";
+                    Player.instance.damage = 0;
                 }
                 else
                 {
+                    //착용전에 장착중인 아이템이 존재하는지 확인
+                    foreach (Item item in inven_W)
+                    {
+                        //장착중인 아이템이 존재한다면
+                        if(item.name.Contains("[E]"))
+                        {
+                            //찾은 아이템
+                            Item findItem = item;
+                            string[] itemName = findItem.name.Split("[E]");
+                            string reName = itemName[1];
+
+                            //현재 장착중인 아이템 해제
+                            for (int j = 0; j < inven_W.Count; j++)
+                            {
+                                if (inven_W[j].name == findItem.name)
+                                {
+                                    inven_W[j].name = reName;
+                                }
+                            }
+                        }
+                    }
+                     
                     inven_W[i].name = "[E]" + inven_W[i].name;
                     Player.instance.weapon = inven_W[i].name;
                     Player.instance.damage = inven_W[i].damage;
@@ -169,15 +201,46 @@ namespace SpartaTextRPG
                 //장착할 방어구
                 Item armor = inven_A[i];
 
+                //이미 장착중인 아이템이 존재한다면
                 if (armor.name.Contains("[E]"))
                 {
-                    alreadyEquip_A = true;
+                    alreadyEquip_W = true;
+                    string[] itemName = armor.name.Split("[E]");
+
+                    //이름 변경
+                    armor.name = itemName[1];
+
+                    //해당 아이템 장착 해제
+                    inven_A[i].name = armor.name;
+                    Player.instance.armor = "미착용";
+                    Player.instance.defence = 0;
                 }
                 else
                 {
+                    //착용전에 장착중인 아이템이 존재하는지 확인
+                    foreach (Item item in inven_A)
+                    {
+                        //장착중인 아이템이 존재한다면
+                        if (item.name.Contains("[E]"))
+                        {
+                            //찾은 아이템
+                            Item findItem = item;
+                            string[] itemName = findItem.name.Split("[E]");
+                            string reName = itemName[1];
+
+                            //현재 장착중인 아이템 해제
+                            for (int j = 0; j < inven_A.Count; j++)
+                            {
+                                if (inven_A[j].name == findItem.name)
+                                {
+                                    inven_A[j].name = reName;
+                                }
+                            }
+                        }
+                    }
                     inven_A[i].name = "[E]" + inven_A[i].name;
                     Player.instance.armor = inven_A[i].name;
-                    Player.instance.defence = inven_A[i].damage;
+                    Player.instance.defence = inven_A[i].defens;
                 }
             }    
         }
