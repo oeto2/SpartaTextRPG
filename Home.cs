@@ -50,41 +50,19 @@ namespace SpartaTextRPG
                 {
                     //홈 화면
                     case 0:
-
-                        isHome = true;
-                        isState = false;
-                        isInven = false;
-
-                        //홈 화면 입력 값
-                        int homeInput;
-                        string strInput;
-
                         //메뉴 출력
                         input = ShowMenu(false);
                         break;
 
                     //상태 창
                     case 1:
-                        isState = true;
-                        isHome = false;
-                        isInven = false;
-
-                        //상태 창 입력 값
-                        int stateInput = 0;
 
                         //플레이어 정보 출력
                         input = player.PrintPlayerInfo();
                         break;
 
                     case 2:
-                        isInven = true;
-                        isState = false;
-                        isHome = false;
-
-                        //인벤 창 입력 값
-                        int InvenInput = 0;
-
-                        //인벤 정보 출력
+                        //인벤토리 정보 출력
                         input = inven.PrintInventory();
                         break;
                 }

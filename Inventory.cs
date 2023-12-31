@@ -128,17 +128,17 @@ namespace SpartaTextRPG
         //장착중인 아이템인지 체크
         public void CheckEquipItem(string _itemName, string _itemType)
         {
-            foreach(Item i in inven)
+            foreach (Item i in inven)
             {
             }
         }
 
-        
+
 
         //아이템 장착
         public void EquipItem(int _itemIndex, string _itemType)
         {
-            int i = _itemIndex -1;
+            int i = _itemIndex - 1;
 
             //이미 해당 무기를 착용중인지
             bool alreadyEquip_W = false;
@@ -171,7 +171,7 @@ namespace SpartaTextRPG
                     foreach (Item item in inven_W)
                     {
                         //장착중인 아이템이 존재한다면
-                        if(item.name.Contains("[E]"))
+                        if (item.name.Contains("[E]"))
                         {
                             //찾은 아이템
                             Item findItem = item;
@@ -188,7 +188,7 @@ namespace SpartaTextRPG
                             }
                         }
                     }
-                     
+
                     inven_W[i].name = "[E]" + inven_W[i].name;
                     Player.instance.weapon = inven_W[i].name;
                     Player.instance.damage = inven_W[i].damage;
@@ -242,7 +242,7 @@ namespace SpartaTextRPG
                     Player.instance.armor = inven_A[i].name;
                     Player.instance.defence = inven_A[i].defens;
                 }
-            }    
+            }
         }
 
 
@@ -265,7 +265,7 @@ namespace SpartaTextRPG
                         break;
 
                     //무기일 경우
-                    case  "W":
+                    case "W":
                         Console.WriteLine("{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info);
                         continue;
 
@@ -322,12 +322,12 @@ namespace SpartaTextRPG
             int weapone_i = _itemNum - 1;
             int armor_i = _itemNum - 1;
 
-            if(_itemType == "W")
+            if (_itemType == "W")
             {
                 foreach (Item i in inven)
                 {
                     //해당 인덱스를 가진 아이템이 존재한다면
-                    if ( weapone_i == _itemNum)
+                    if (weapone_i == _itemNum)
                     {
                         return true;
                     }
@@ -365,7 +365,7 @@ namespace SpartaTextRPG
             //무기 아이템 보유 목록
             foreach (var item in inven)
             {
-                if(item.type == "W")
+                if (item.type == "W")
                 {
                     Console.WriteLine("{3}.{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info, weaponCount);
                     weaponCount++;
@@ -384,22 +384,31 @@ namespace SpartaTextRPG
             string input = Console.ReadLine();
             if (home.CheckNullEnter(input))
                 PrintWeaponeEquipment();
+
             else
             {
-                //해당 아이템을 가지고 있는지 확인
-                bool isHave = CheckHaveItem(int.Parse(input), "W");
-                if (isHave && int.Parse(input) != 0)
+                if ((int.Parse(input) > (weaponCount - 1)) || int.Parse(input) < 0)
                 {
-                    //해당아이템 장착
-                    EquipItem(int.Parse(input), "W");
+                    System_.instance.isInputWrong = true;
                     PrintWeaponeEquipment();
                 }
-                
-                switch(int.Parse(input))
+                else
                 {
-                    //나가기
-                    case 0:
-                        return 0;
+                    //해당 아이템을 가지고 있는지 확인
+                    bool isHave = CheckHaveItem(int.Parse(input), "W");
+                    if (isHave && int.Parse(input) != 0)
+                    {
+                        //해당아이템 장착
+                        EquipItem(int.Parse(input), "W");
+                        PrintWeaponeEquipment();
+                    }
+
+                    switch (int.Parse(input))
+                    {
+                        //나가기
+                        case 0:
+                            return 0;
+                    }
                 }
             }
 
@@ -442,20 +451,28 @@ namespace SpartaTextRPG
                 PrintArmorEquipment();
             else
             {
-                //해당 아이템을 가지고 있는지 확인
-                bool isHave = CheckHaveItem(int.Parse(input), "A");
-                if (isHave && int.Parse(input) != 0)
+                if ((int.Parse(input) > (armorCount - 1)) || int.Parse(input) < 0)
                 {
-                    //해당아이템 장착
-                    EquipItem(int.Parse(input), "A");
+                    System_.instance.isInputWrong = true;
                     PrintArmorEquipment();
                 }
-
-                switch (int.Parse(input))
+                else
                 {
-                    //나가기
-                    case 0:
-                        return 0;
+                    //해당 아이템을 가지고 있는지 확인
+                    bool isHave = CheckHaveItem(int.Parse(input), "A");
+                    if (isHave && int.Parse(input) != 0)
+                    {
+                        //해당아이템 장착
+                        EquipItem(int.Parse(input), "A");
+                        PrintArmorEquipment();
+                    }
+
+                    switch (int.Parse(input))
+                    {
+                        //나가기
+                        case 0:
+                            return 0;
+                    }
                 }
             }
 
