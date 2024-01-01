@@ -25,6 +25,8 @@ namespace SpartaTextRPG
         public string info;
         //아이템 타입
         public string type;
+        //해당 상품이 팔렸는지
+        public bool isSell = false;
     }
 
     //아이템 창

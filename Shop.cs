@@ -15,6 +15,9 @@ namespace SpartaTextRPG
 
         public List<Item> product = new List<Item>();
 
+        //플레이어가 물품을 구매했는지
+        public bool isBuy = false;
+
         //상점 물품 업데이트
         public void UpdateProduct()
         {
@@ -23,8 +26,6 @@ namespace SpartaTextRPG
                 product.Add(Inventory.instance.item[i]);
             }
         }
-
-
 
         //상점 창 
         public int PrintShop()
@@ -44,7 +45,11 @@ namespace SpartaTextRPG
             {
                 if (i.type == "A")
                 {
-                    Console.WriteLine("- {0} | 방어력 +{1} | {2} | {3} G", i.name, i.defens, i.info, i.price);
+                    //판매되지 않은 경우
+                    if (!i.isSell)
+                        Console.WriteLine("- {0} | 방어력 +{1} | {2} | {3} G", i.name, i.defens, i.info, i.price);
+                    else
+                        Console.WriteLine("- {0} | 방어력 +{1} | {2} | {3}", i.name, i.defens, i.info, "구매 완료");
                 }
             }
             Console.WriteLine();
@@ -54,7 +59,11 @@ namespace SpartaTextRPG
             {
                 if (i.type == "W")
                 {
+                    //판매되지 않은 경우
+                    if(!i.isSell)
                     Console.WriteLine("- {0} | 공격력 +{1} | {2} | {3} G", i.name, i.damage, i.info, i.price);
+                    else
+                        Console.WriteLine("- {0} | 공격력 +{1} | {2} | {3}", i.name, i.damage, i.info, "구매 완료");
                 }
             }
             Console.WriteLine();
@@ -72,7 +81,7 @@ namespace SpartaTextRPG
             string input = Console.ReadLine();
             //Null입력 체크
             if (home.CheckNullEnter(input))
-                PrintShop();
+                return 3;
             else
             {
                 switch (int.Parse(input))
@@ -90,11 +99,10 @@ namespace SpartaTextRPG
 
                     default:
                         System_.instance.isInputWrong = true;
-                        PrintShop();
                         break;
                 }
             }
-            return 0;
+            return 3;
         }
 
         //상점 구매창 
@@ -118,7 +126,11 @@ namespace SpartaTextRPG
             {
                 if (i.type == "A")
                 {
+                    if(!i.isSell)
                     Console.WriteLine("- {4}.{0} | 방어력 +{1} | {2} | {3} G", i.name, i.defens, i.info, i.price, itemNum);
+                    else
+                        Console.WriteLine("- {4}.{0} | 방어력 +{1} | {2} | {3}", i.name, i.defens, i.info, "구매완료", itemNum);
+
                     itemNum++;
                 }
             }
@@ -129,13 +141,20 @@ namespace SpartaTextRPG
             {
                 if (i.type == "W")
                 {
-                    Console.WriteLine("- {4}.{0} | 공격력 +{1} | {2} | {3} G", i.name, i.damage, i.info, i.price, itemNum);
+                    if(!i.isSell)
+                        Console.WriteLine("- {4}.{0} | 공격력 +{1} | {2} | {3} G", i.name, i.damage, i.info, i.price, itemNum);
+                    else
+                        Console.WriteLine("- {4}.{0} | 공격력 +{1} | {2} | {3}", i.name, i.damage, i.info, "구매완료", itemNum);
                     itemNum++;
                 }
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
+            if(isBuy)
+            {
+                Console.WriteLine("******해당 상품을 구매했습니다!*******");
+            }
             if (System_.instance.isInputWrong)
             {
                 Console.WriteLine("******잘못된 입력입니다!*******");
@@ -155,18 +174,19 @@ namespace SpartaTextRPG
                 {
                     //해당아이템 구매
                     BuyProduct(int.Parse(input));
-                    PrintShop_Buy();
                 }
-
                 switch (int.Parse(input))
                 {
                     //나가기
                     case 0:
+                        isBuy = false;
                         System_.instance.isInputWrong = false;
                         return 0;
 
                     default:
+                        if(!isHave)
                         System_.instance.isInputWrong = true;
+
                         PrintShop_Buy();
                         break;
                 }
@@ -182,12 +202,11 @@ namespace SpartaTextRPG
 
             foreach (Item i in product)
             {
-                itemCount++;
-
                 if (proIndex == itemCount)
                 {
                     return true;
                 }
+                itemCount++;
             }
 
             return false;
@@ -199,16 +218,17 @@ namespace SpartaTextRPG
             int proIndex = _itemNum - 1;
             int itemCount = 0;
 
-            foreach(Item i in product)
+            foreach (Item i in product)
             {
-                itemCount++;
-
+                //해당 아이템이 존재 한다면
                 if (proIndex == itemCount)
                 {
-                    product[proIndex].name = "[S]" + product[proIndex].name;
+                    Player.instance.gold -= i.price;
+                    i.isSell = true;
+                    isBuy = true;
                 }
+                itemCount++;
             }
-
         }
     }
 
