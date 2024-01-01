@@ -46,6 +46,11 @@ namespace SpartaTextRPG
 
         public Item[] item = new Item[10];
 
+        //현재 보유중인 무기의 갯수
+        public int curWeaponNum = 0;
+        //현재 보유중인 방어구의 갯수
+        public int curArmorNum = 0;
+
         //게임에서 사용될 아이템 정보 업데이트
         public void SetItemInfo()
         {
@@ -126,11 +131,33 @@ namespace SpartaTextRPG
         //무기 리스트 갱신
         public void UpdateInven_W()
         {
-            foreach (Item i in instance.inven)
+            if(instance.curWeaponNum == 0)
             {
-                if (i.type == "W")
+                foreach (Item i in instance.inven)
                 {
-                    instance.inven_W.Add(i);
+                    if (i.type == "W")
+                    {
+                        instance.inven_W.Add(i);
+                        instance.curWeaponNum++;
+                    }
+                }
+            }
+            else
+            {
+                int indexNum = 0;
+                foreach (Item i in instance.inven)
+                {
+                    if (i.type == "W")
+                    {
+                        indexNum++;
+                    }
+
+                    if (indexNum == (instance.curWeaponNum + 1))
+                    {
+                        //해당 아이템 획득
+                        inven_W.Add(i);
+                        instance.curWeaponNum++;
+                    }
                 }
             }
         }
@@ -138,11 +165,33 @@ namespace SpartaTextRPG
         //방어구 리스트 갱신
         public void UpdateInven_A()
         {
-            foreach (Item i in instance.inven)
+            if (instance.curArmorNum == 0)
             {
-                if (i.type == "A")
+                foreach (Item i in instance.inven)
                 {
-                    instance.inven_A.Add(i);
+                    if (i.type == "A")
+                    {
+                        instance.inven_A.Add(i);
+                        instance.curArmorNum++;
+                    }
+                }
+            }
+            else
+            {
+                int indexNum = 0;
+                foreach (Item i in instance.inven)
+                {
+                    if (i.type == "A")
+                    {
+                        indexNum++;
+                    }
+
+                    if (indexNum == (instance.curArmorNum + 1))
+                    {
+                        //해당 아이템 획득
+                        inven_A.Add(i);
+                        instance.curArmorNum++;
+                    }
                 }
             }
         }
@@ -152,9 +201,9 @@ namespace SpartaTextRPG
         {
             //해당 아이템 인벤에 추가
             instance.inven.Add(_item);
-            ////리스트 갱신
-            //UpdateInven_A();
-            //UpdateInven_W();
+            //리스트 갱신
+            UpdateInven_A();
+            UpdateInven_W();
         }
 
         //아이템 장착
