@@ -16,9 +16,9 @@ namespace SpartaTextRPG
         //아이템 이름
         public string name;
         //공격력
-        public int damage;
+        public int damage = 0;
         //방어력
-        public int defens;
+        public int defens = 0;
         //가격
         public int price;
         //정보
@@ -264,6 +264,7 @@ namespace SpartaTextRPG
                     instance.inven_W[i].name = "[E]" + instance.inven_W[i].name;
                     Player.instance.weapon = instance.inven_W[i].name;
                     Player.instance.damage += instance.inven_W[i].damage;
+                    Player.instance.equipWeapon = weapon;
                 }
             }
 
@@ -314,7 +315,8 @@ namespace SpartaTextRPG
                     //방어구 착용
                     instance.inven_A[i].name = "[E]" + instance.inven_A[i].name;
                     Player.instance.armor = instance.inven_A[i].name;
-                    Player.instance.defence = instance.inven_A[i].defens;
+                    Player.instance.defence += instance.inven_A[i].defens;
+                    Player.instance.equipArmor = armor;
                 }
             }
         }
