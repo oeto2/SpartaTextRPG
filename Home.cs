@@ -58,7 +58,6 @@ namespace SpartaTextRPG
 
                     //상태 창
                     case 1:
-
                         //플레이어 정보 출력
                         input = player.PrintPlayerInfo();
                         break;

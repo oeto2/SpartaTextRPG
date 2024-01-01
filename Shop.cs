@@ -243,19 +243,33 @@ namespace SpartaTextRPG
                             isBuy = false;
                             enughMoney = true;
                         }
+                        //아이템 구매
                         else
                         {
-                            enughMoney = true;
                             Player.instance.gold -= i.price;
                             i.isSell = true;
+                            enughMoney = true;
                             isBuy = true;
                             isAreadySell = false;
                         }
                     }
+
+                    //소지금 부족
                     else
                     {
-                        enughMoney = false;
-                        isBuy = false;
+                        //이미 판매된 아이템이라면
+                        if(i.isSell)
+                        {
+                            isAreadySell = true;
+                            enughMoney = true;
+                            isBuy = false;
+                        }
+                        else
+                        {
+                            isAreadySell = false;
+                            enughMoney = false;
+                            isBuy = false;
+                        }
                     }
                 }
                 itemCount++;
