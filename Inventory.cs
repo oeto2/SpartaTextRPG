@@ -233,8 +233,8 @@ namespace SpartaTextRPG
 
                     //해당 아이템 장착 해제
                     instance.inven_W[i].name = weapon.name;
-                    Player.instance.weapon = "미착용";
-                    Player.instance.damage = 0;
+                    Player.instance.equipWeapon = new Item();
+                    Player.instance.damage -= weapon.damage;
                 }
                 else
                 {
@@ -285,8 +285,8 @@ namespace SpartaTextRPG
 
                     //해당 아이템 장착 해제
                     instance.inven_A[i].name = armor.name;
-                    Player.instance.armor = "미착용";
-                    Player.instance.defence = 0;
+                    Player.instance.equipArmor = new Item();
+                    Player.instance.defence -= armor.defens;
                 }
                 else
                 {
