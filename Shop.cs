@@ -246,6 +246,7 @@ namespace SpartaTextRPG
                         //아이템 구매
                         else
                         {
+                            Inventory.instance.GetItem(i);
                             Player.instance.gold -= i.price;
                             i.isSell = true;
                             enughMoney = true;

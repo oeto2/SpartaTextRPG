@@ -148,22 +148,14 @@ namespace SpartaTextRPG
         }
 
         //아이템 획득
-        public void GetItem(string _name)
+        public void GetItem(Item _item)
         {
-            switch (_name)
-            {
-                case "무쇠갑옷":
-                    instance.inven.Add(item[0]);
-                    break;
-                case "스파르타의 창":
-                    instance.inven.Add(item[1]);
-                    break;
-                case "낡은 검":
-                    instance.inven.Add(item[2]);
-                    break;
-            }
+            //해당 아이템 인벤에 추가
+            instance.inven.Add(_item);
+            ////리스트 갱신
+            //UpdateInven_A();
+            //UpdateInven_W();
         }
-
 
         //아이템 장착
         public void EquipItem(int _itemIndex, string _itemType)
@@ -283,27 +275,21 @@ namespace SpartaTextRPG
             Console.WriteLine("인벤토리");
             Console.WriteLine();
             Console.WriteLine("보유중인 아이템을 관리할 수 있습니다");
+
+            //무기 리스트 보여주기
             Console.WriteLine();
-            Console.WriteLine("[아이템 목록]");
-
-            //아이템 보유 목록
-            foreach (var item in instance.inven)
+            Console.WriteLine("[무기]");
+            foreach(Item i in instance.inven_W)
             {
-                switch (item.type)
-                {
-                    default:
-                        break;
+                Console.WriteLine("- {0} | 공격력 +{1} | {2}", i.name, i.damage, i.info);
+            }
 
-                    //무기일 경우
-                    case "W":
-                        Console.WriteLine("- {0} | 공격력 +{1} | {2}", item.name, item.damage, item.info);
-                        continue;
-
-                    //방어구일 경우
-                    case "A":
-                        Console.WriteLine("- {0} | 방어력 +{1} | {2}", item.name, item.defens, item.info);
-                        continue;
-                }
+            //방어구 리스트 보여주기
+            Console.WriteLine();
+            Console.WriteLine("[방어구]");
+            foreach (Item i in instance.inven_A)
+            {
+                Console.WriteLine("- {0} | 방어력 +{1} | {2}", i.name, i.defens, i.info);
             }
 
             Console.WriteLine();
