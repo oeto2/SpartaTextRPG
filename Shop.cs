@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -17,6 +18,12 @@ namespace SpartaTextRPG
 
         //플레이어가 물품을 구매했는지
         public bool isBuy = false;
+
+        //플레이어가 돈이 충분한지
+        public bool enughMoney = true;
+
+        //이미 판매된 아이템인지
+        public bool isAreadySell = false;
 
         //상점 물품 업데이트
         public void UpdateProduct()
@@ -60,8 +67,8 @@ namespace SpartaTextRPG
                 if (i.type == "W")
                 {
                     //판매되지 않은 경우
-                    if(!i.isSell)
-                    Console.WriteLine("- {0} | 공격력 +{1} | {2} | {3} G", i.name, i.damage, i.info, i.price);
+                    if (!i.isSell)
+                        Console.WriteLine("- {0} | 공격력 +{1} | {2} | {3} G", i.name, i.damage, i.info, i.price);
                     else
                         Console.WriteLine("- {0} | 공격력 +{1} | {2} | {3}", i.name, i.damage, i.info, "구매 완료");
                 }
@@ -126,8 +133,8 @@ namespace SpartaTextRPG
             {
                 if (i.type == "A")
                 {
-                    if(!i.isSell)
-                    Console.WriteLine("- {4}.{0} | 방어력 +{1} | {2} | {3} G", i.name, i.defens, i.info, i.price, itemNum);
+                    if (!i.isSell)
+                        Console.WriteLine("- {4}.{0} | 방어력 +{1} | {2} | {3} G", i.name, i.defens, i.info, i.price, itemNum);
                     else
                         Console.WriteLine("- {4}.{0} | 방어력 +{1} | {2} | {3}", i.name, i.defens, i.info, "구매완료", itemNum);
 
@@ -141,7 +148,7 @@ namespace SpartaTextRPG
             {
                 if (i.type == "W")
                 {
-                    if(!i.isSell)
+                    if (!i.isSell)
                         Console.WriteLine("- {4}.{0} | 공격력 +{1} | {2} | {3} G", i.name, i.damage, i.info, i.price, itemNum);
                     else
                         Console.WriteLine("- {4}.{0} | 공격력 +{1} | {2} | {3}", i.name, i.damage, i.info, "구매완료", itemNum);
@@ -151,22 +158,23 @@ namespace SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
-            if(isBuy)
-            {
+
+            if (isAreadySell)
+                Console.WriteLine("******이미 판매된 아이템입니다!*******");
+            if (isBuy)
                 Console.WriteLine("******해당 상품을 구매했습니다!*******");
-            }
+            else if (!enughMoney)
+                Console.WriteLine("******소지금이 부족합니다!*******");
             if (System_.instance.isInputWrong)
-            {
                 Console.WriteLine("******잘못된 입력입니다!*******");
-            }
+
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
-
 
             string input = Console.ReadLine();
             //Null입력 체크
             if (home.CheckNullEnter(input))
-                PrintShop();
+                PrintShop_Buy();
             else
             {
                 bool isHave = CheckHaveProduct(int.Parse(input));
@@ -175,18 +183,20 @@ namespace SpartaTextRPG
                     //해당아이템 구매
                     BuyProduct(int.Parse(input));
                 }
+
                 switch (int.Parse(input))
                 {
                     //나가기
                     case 0:
-                        isBuy = false;
                         System_.instance.isInputWrong = false;
+                        enughMoney = true;
+                        isAreadySell = false;
+                        isBuy = false;
                         return 0;
 
                     default:
-                        if(!isHave)
-                        System_.instance.isInputWrong = true;
-
+                        if (!isHave)
+                            System_.instance.isInputWrong = true;
                         PrintShop_Buy();
                         break;
                 }
@@ -223,9 +233,30 @@ namespace SpartaTextRPG
                 //해당 아이템이 존재 한다면
                 if (proIndex == itemCount)
                 {
-                    Player.instance.gold -= i.price;
-                    i.isSell = true;
-                    isBuy = true;
+                    //플레이어가 돈이 충분한지 확인
+                    if (Player.instance.gold >= i.price)
+                    {
+                        //사려는 아이템이 이미 판매되었는지 확인
+                        if(i.isSell)
+                        {
+                            isAreadySell = true;
+                            isBuy = false;
+                            enughMoney = true;
+                        }
+                        else
+                        {
+                            enughMoney = true;
+                            Player.instance.gold -= i.price;
+                            i.isSell = true;
+                            isBuy = true;
+                            isAreadySell = false;
+                        }
+                    }
+                    else
+                    {
+                        enughMoney = false;
+                        isBuy = false;
+                    }
                 }
                 itemCount++;
             }
