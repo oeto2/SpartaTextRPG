@@ -260,9 +260,10 @@ namespace SpartaTextRPG
                         }
                     }
 
+                    //무기 착용
                     instance.inven_W[i].name = "[E]" + instance.inven_W[i].name;
                     Player.instance.weapon = instance.inven_W[i].name;
-                    Player.instance.damage = instance.inven_W[i].damage;
+                    Player.instance.damage += instance.inven_W[i].damage;
                 }
             }
 
@@ -309,6 +310,8 @@ namespace SpartaTextRPG
                             }
                         }
                     }
+
+                    //방어구 착용
                     instance.inven_A[i].name = "[E]" + instance.inven_A[i].name;
                     Player.instance.armor = instance.inven_A[i].name;
                     Player.instance.defence = instance.inven_A[i].defens;
@@ -384,8 +387,8 @@ namespace SpartaTextRPG
         //아이템을 보유하고 있는지 체크
         public bool CheckHaveItem(int _itemNum, string _itemType)
         {
-            int weapone_i = _itemNum - 1;
-            int armor_i = _itemNum - 1;
+            int weapone_i = 1;
+            int armor_i = 1;
 
             if (_itemType == "W")
             {
@@ -433,7 +436,6 @@ namespace SpartaTextRPG
                 if (item.type == "W")
                 {
                     Console.WriteLine("- {3}.{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info, weaponCount);
-                    weaponCount++;
                 }
             }
             Console.WriteLine();
@@ -452,7 +454,7 @@ namespace SpartaTextRPG
 
             else
             {
-                if ((int.Parse(input) > (weaponCount - 1)) || int.Parse(input) < 0)
+                if ((int.Parse(input) > (instance.curWeaponNum)) || int.Parse(input) < 0)
                 {
                     System_.instance.isInputWrong = true;
                     PrintWeaponeEquipment();

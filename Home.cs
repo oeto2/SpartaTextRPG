@@ -42,7 +42,7 @@ namespace SpartaTextRPG
                 if (isFirst)
                 {
                     inven.SetItemInfo(); //아이템 정보 업데이트
-                    inven.GetStartItmes(); //시작 아이템 획득
+                    //inven.GetStartItmes(); //시작 아이템 획득
                     Shop.instance.UpdateProduct(); //상점 아이템 리스트 업데이트
                     isFirst = false;
                 }

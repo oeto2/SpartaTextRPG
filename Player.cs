@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,10 +15,11 @@ namespace SpartaTextRPG
 
         public int level = 1;
         public string playerClass = "모험가";
-        public int damage = 0;
-        public int defence = 0;
-        public int hp = 10;
-        public int gold = 10000;
+        public string playerName = "르탄";
+        public int damage = 10;
+        public int defence = 5;
+        public int hp = 100;
+        public int gold = 1500;
         public string weapon = "미착용";
         public string armor = "미착용";
         public int equipWeponNum = 0;
@@ -28,18 +30,27 @@ namespace SpartaTextRPG
 
         public int PrintPlayerInfo()
         {
+            //플레이어 레벨이 10보다 낮은지
+            bool isLevelLow = false;
+            if (instance.level < 10)
+                isLevelLow = true;
+
             Console.Clear();
 
             Console.WriteLine("상태보기");
             Console.WriteLine();
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
-            Console.WriteLine("Lv. {0}", instance.level);
-            Console.WriteLine("직업: {0}", instance.playerClass);
+            if(isLevelLow)
+            Console.WriteLine("Lv. {0}{1}", "0",instance.level);
+            else
+                Console.WriteLine("Lv. {0}",instance.level);
+            Console.WriteLine("{0} ({1})", playerName,instance.playerClass);
             Console.WriteLine("공격력: {0}", instance.damage);
             Console.WriteLine("방어력: {0}", instance.defence);
             Console.WriteLine("체력: {0}", instance.hp);
             Console.WriteLine("Gold: {0}", instance.gold);
+            Console.WriteLine();
             Console.WriteLine("착용중인 무기 : {0}", instance.weapon);
             Console.WriteLine("착용중인 방어구 : {0}", instance.armor);
             Console.WriteLine();
