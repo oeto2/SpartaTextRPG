@@ -19,7 +19,7 @@ namespace SpartaTextRPG
         public int damage = 10;
         public int defence = 5;
         public int hp = 100;
-        public int gold = 1500;
+        public int gold = 10000;
         public string weapon = "미착용";
         public string armor = "미착용";
         public int equipWeponNum = 0;

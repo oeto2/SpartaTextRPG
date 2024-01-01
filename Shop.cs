@@ -16,6 +16,9 @@ namespace SpartaTextRPG
 
         public List<Item> product = new List<Item>();
 
+        //상점 물품 리스트
+        public Item[] shopProduct = new Item[20];
+
         //플레이어가 물품을 구매했는지
         public bool isBuy = false;
 
@@ -28,9 +31,9 @@ namespace SpartaTextRPG
         //상점 물품 업데이트
         public void UpdateProduct()
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i <= 10; i++)
             {
-                product.Add(Inventory.instance.item[i]);
+                instance.product.Add(Inventory.instance.item[i]);
             }
         }
 
@@ -48,7 +51,7 @@ namespace SpartaTextRPG
             Console.WriteLine("[방어구 목록]");
 
             //상점 방어구 목록 보여주기
-            foreach (Item i in product)
+            foreach (Item i in instance.product)
             {
                 if (i.type == "A")
                 {
@@ -62,7 +65,7 @@ namespace SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("[무기 목록]");
             //상점 무기 목록 보여주기
-            foreach (Item i in product)
+            foreach (Item i in instance.product)
             {
                 if (i.type == "W")
                 {
@@ -76,6 +79,7 @@ namespace SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine("1. 아이템 구매");
+            Console.WriteLine("2. 아이템 판매");
             Console.WriteLine();
             if (System_.instance.isInputWrong)
             {
@@ -104,6 +108,13 @@ namespace SpartaTextRPG
                         PrintShop_Buy();
                         break;
 
+                    //아이템 판매
+                    case 2:
+                        System_.instance.isInputWrong = false;
+                        PrintShop_Sell();
+                        break;
+
+
                     default:
                         System_.instance.isInputWrong = true;
                         break;
@@ -128,11 +139,15 @@ namespace SpartaTextRPG
             //아이템 번호
             int itemNum = 1;
 
+           
+
             //상점 방어구 목록 보여주기
-            foreach (Item i in product)
+            foreach (Item i in instance.product)
             {
                 if (i.type == "A")
                 {
+                    instance.shopProduct[itemNum - 1] = i;
+
                     if (!i.isSell)
                         Console.WriteLine("- {4}.{0} | 방어력 +{1} | {2} | {3} G", i.name, i.defens, i.info, i.price, itemNum);
                     else
@@ -144,10 +159,12 @@ namespace SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("[무기 목록]");
             //상점 무기 목록 보여주기
-            foreach (Item i in product)
+            foreach (Item i in instance.product)
             {
                 if (i.type == "W")
                 {
+                    instance.shopProduct[itemNum - 1] = i;
+
                     if (!i.isSell)
                         Console.WriteLine("- {4}.{0} | 공격력 +{1} | {2} | {3} G", i.name, i.damage, i.info, i.price, itemNum);
                     else
@@ -160,7 +177,7 @@ namespace SpartaTextRPG
             Console.WriteLine();
 
             if (isAreadySell)
-                Console.WriteLine("******이미 판매된 아이템입니다!*******");
+                Console.WriteLine("******이미 구매한 아이템입니다!*******");
             if (isBuy)
                 Console.WriteLine("******해당 상품을 구매했습니다!*******");
             else if (!enughMoney)
@@ -204,13 +221,85 @@ namespace SpartaTextRPG
             return 0;
         }
 
+        //상점 판매창 
+        public int PrintShop_Sell()
+        {
+            Console.Clear();
+
+            Console.WriteLine("상점 - 아이템 판매");
+            Console.WriteLine("판매할 아이템 번호를 입력해주세요.");
+            Console.WriteLine();
+            Console.WriteLine("[보유골드]");
+            Console.WriteLine("{0} G", Player.instance.gold);
+
+            //아이템 번호
+            int itemNum = 1;
+
+            //무기 리스트 보여주기
+            Console.WriteLine();
+            Console.WriteLine("[무기]");
+            foreach (Item i in Inventory.instance.inven_W)
+            {
+                Console.WriteLine("-{3}.{0} | 공격력 +{1} | {2}", i.name, i.damage, i.info, itemNum);
+                itemNum++;
+            }
+
+            //방어구 리스트 보여주기
+            Console.WriteLine();
+            Console.WriteLine("[방어구]");
+            foreach (Item i in Inventory.instance.inven_A)
+            {
+                Console.WriteLine("-{3}.{0} | 방어력 +{1} | {2}", i.name, i.defens, i.info, itemNum);
+                itemNum++;
+            }
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+
+            if (System_.instance.isInputWrong)
+                Console.WriteLine("******잘못된 입력입니다!*******");
+
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
+
+            string input = Console.ReadLine();
+            //Null입력 체크
+            if (home.CheckNullEnter(input))
+                PrintShop_Buy();
+            else
+            {
+                bool isHave = CheckHaveProduct(int.Parse(input));
+                if (isHave && int.Parse(input) != 0)
+                {
+                    //해당아이템 판매
+                    //BuyProduct(int.Parse(input));
+                }
+
+                switch (int.Parse(input))
+                {
+                    //나가기
+                    case 0:
+                        System_.instance.isInputWrong = false;
+                        return 0;
+
+                    default:
+                        if (!isHave)
+                            System_.instance.isInputWrong = true;
+                        PrintShop_Sell();
+                        break;
+                }
+            }
+            return 0;
+        }
+
+
         //상점에 해당 상품이 있는지 체크
         public bool CheckHaveProduct(int _itemNum)
         {
             int proIndex = _itemNum - 1;
             int itemCount = 0;
 
-            foreach (Item i in product)
+            foreach (Item i in instance.product)
             {
                 if (proIndex == itemCount)
                 {
@@ -228,7 +317,7 @@ namespace SpartaTextRPG
             int proIndex = _itemNum - 1;
             int itemCount = 0;
 
-            foreach (Item i in product)
+            foreach (Item i in instance.shopProduct)
             {
                 //해당 아이템이 존재 한다면
                 if (proIndex == itemCount)

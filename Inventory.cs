@@ -44,7 +44,7 @@ namespace SpartaTextRPG
         //방어구 인벤토리
         public List<Item> inven_A = new List<Item>();
 
-        public Item[] item = new Item[10];
+        public Item[] item = new Item[20];
 
         //현재 보유중인 무기의 갯수
         public int curWeaponNum = 0;
@@ -113,6 +113,18 @@ namespace SpartaTextRPG
             instance.item[8].price = 3000;
             instance.item[8].info = "스파르타의 전사들이 사용했다는 전설의 창입니다.";
             instance.item[8].type = "W";
+
+            instance.item[9].name = "엑스칼리버";
+            instance.item[9].damage = 20;
+            instance.item[9].price = 10000;
+            instance.item[9].info = "아서왕이 사용했던 전설의 검입니다.";
+            instance.item[9].type = "W";
+
+            instance.item[10].name = "해신작쇼";
+            instance.item[10].defens = 20;
+            instance.item[10].price = 10000;
+            instance.item[10].info = "이상한 기운을 내뿜는 방어구 입니다.";
+            instance.item[10].type = "A";
         }
 
         //시작 아이템 획득
@@ -438,6 +450,7 @@ namespace SpartaTextRPG
                 if (item.type == "W")
                 {
                     Console.WriteLine("- {3}.{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info, weaponCount);
+                    weaponCount++;
                 }
             }
             Console.WriteLine();
