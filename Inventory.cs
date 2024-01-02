@@ -54,12 +54,6 @@ namespace SpartaTextRPG
         //게임에서 사용될 아이템 정보 업데이트
         public void SetItemInfo()
         {
-            //Class 배열 초기화
-            for (int i = 0; i < item.Length; i++)
-            {
-                instance.item[i] = new Item();
-            }
-
             instance.item[0].name = "무쇠 갑옷";
             instance.item[0].defens = 5;
             instance.item[0].price = 500;

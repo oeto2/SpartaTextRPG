@@ -23,7 +23,6 @@ namespace SpartaTextRPG
             //인벤토리
             Inventory inven = new Inventory();
 
-
             int input = 0;
 
             //처음 시작했는지

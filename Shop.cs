@@ -18,7 +18,7 @@ namespace SpartaTextRPG
         public List<Item> product = new List<Item>();
 
         //상점 물품 리스트
-        public Item[] shopProduct = new Item[20];
+        public List<Item> shopProduct = new List<Item>();
 
         //판매 아이템 리스트
         public List<Item> sellItem = new List<Item>();
@@ -150,7 +150,7 @@ namespace SpartaTextRPG
             {
                 if (i.type == "A")
                 {
-                    instance.shopProduct[itemNum - 1] = i;
+                    instance.shopProduct.Add(i);
 
                     if (!i.isSell)
                         Console.WriteLine("- {4}.{0} | 방어력 +{1} | {2} | {3} G", i.name, i.defens, i.info, i.price, itemNum);
@@ -167,7 +167,7 @@ namespace SpartaTextRPG
             {
                 if (i.type == "W")
                 {
-                    instance.shopProduct[itemNum - 1] = i;
+                    instance.shopProduct.Add(i);
 
                     if (!i.isSell)
                         Console.WriteLine("- {4}.{0} | 공격력 +{1} | {2} | {3} G", i.name, i.damage, i.info, i.price, itemNum);
