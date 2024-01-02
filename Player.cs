@@ -91,9 +91,7 @@ namespace SpartaTextRPG
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
             if (System_.instance.isInputWrong)
-            {
                 Console.WriteLine("******잘못된 입력입니다!*******");
-            }
             Console.WriteLine("원하시는 행동을 입력해주세요");
             Console.Write(">>");
 

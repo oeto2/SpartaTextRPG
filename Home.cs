@@ -78,6 +78,12 @@ namespace SpartaTextRPG
                         //던전 입장
                         input = Dungeon.instance.PrintDungeonGate();
                         break;
+
+                    //휴식 하기
+                    case 5:
+                        //던전 입장
+                        input = Dungeon.instance.PrintDungeonGate();
+                        break;
                 }
             }
 
@@ -126,6 +132,11 @@ namespace SpartaTextRPG
 
                         //던전 이동
                         case 4:
+                            System_.instance.isInputWrong = false;
+                            return int.Parse(input);
+
+                        //휴식 하기
+                        case 5:
                             System_.instance.isInputWrong = false;
                             return int.Parse(input);
 
