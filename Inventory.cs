@@ -44,7 +44,7 @@ namespace SpartaTextRPG
         //방어구 인벤토리
         public List<Item> inven_A = new List<Item>();
 
-        public Item[] item = new Item[20];
+        public List<Item> itemList = new List<Item>();
 
         //현재 보유중인 무기의 갯수
         public int curWeaponNum = 0;
@@ -54,71 +54,76 @@ namespace SpartaTextRPG
         //게임에서 사용될 아이템 정보 업데이트
         public void SetItemInfo()
         {
-            instance.item[0].name = "무쇠 갑옷";
-            instance.item[0].defens = 5;
-            instance.item[0].price = 500;
-            instance.item[0].info = "무쇠로 만들어져 튼튼한 갑옷입니다.";
-            instance.item[0].type = "A";
+            for (int i = 0; i < 20; i++)
+            {
+                instance.itemList.Add(new Item());
+            }
 
-            instance.item[1].name = "스파르타의 창";
-            instance.item[1].damage = 7;
-            instance.item[1].price = 1000;
-            instance.item[1].info = "스파르타의 전사들이 사용했다는 전설의 창입니다.";
-            instance.item[1].type = "W";
+            instance.itemList[0].name = "무쇠 갑옷";
+            instance.itemList[0].defens = 5;
+            instance.itemList[0].price = 500;
+            instance.itemList[0].info = "무쇠로 만들어져 튼튼한 갑옷입니다.";
+            instance.itemList[0].type = "A";
 
-            instance.item[2].name = "낡은 검";
-            instance.item[2].damage = 2;
-            instance.item[2].price = 100;
-            instance.item[2].info = "쉽게 볼 수 있는 낡은 검 입니다.";
-            instance.item[2].type = "W";
+            instance.itemList[1].name = "스파르타의 창";
+            instance.itemList[1].damage = 7;
+            instance.itemList[1].price = 1000;
+            instance.itemList[1].info = "스파르타의 전사들이 사용했다는 전설의 창입니다.";
+            instance.itemList[1].type = "W";
 
-            instance.item[3].name = "수련자의 갑옷";
-            instance.item[3].defens = 5;
-            instance.item[3].price = 1000;
-            instance.item[3].info = "수련에 도움을 주는 갑옷입니다.";
-            instance.item[3].type = "A";
+            instance.itemList[2].name = "낡은 검";
+            instance.itemList[2].damage = 2;
+            instance.itemList[2].price = 100;
+            instance.itemList[2].info = "쉽게 볼 수 있는 낡은 검 입니다.";
+            instance.itemList[2].type = "W";
 
-            instance.item[4].name = "무쇠 갑옷";
-            instance.item[4].defens = 9;
-            instance.item[4].price = 2000;
-            instance.item[4].info = "수련에 도움을 주는 갑옷입니다.";
-            instance.item[4].type = "A";
+            instance.itemList[3].name = "수련자의 갑옷";
+            instance.itemList[3].defens = 5;
+            instance.itemList[3].price = 1000;
+            instance.itemList[3].info = "수련에 도움을 주는 갑옷입니다.";
+            instance.itemList[3].type = "A";
 
-            instance.item[5].name = "스파르타 갑옷";
-            instance.item[5].defens = 9;
-            instance.item[5].price = 3500;
-            instance.item[5].info = "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.";
-            instance.item[5].type = "A";
+            instance.itemList[4].name = "무쇠 갑옷";
+            instance.itemList[4].defens = 9;
+            instance.itemList[4].price = 2000;
+            instance.itemList[4].info = "수련에 도움을 주는 갑옷입니다.";
+            instance.itemList[4].type = "A";
 
-            instance.item[6].name = "낡은 검";
-            instance.item[6].damage = 2;
-            instance.item[6].price = 600;
-            instance.item[6].info = "쉽게 볼 수 있는 낡은 검 입니다.";
-            instance.item[6].type = "W";
+            instance.itemList[5].name = "스파르타 갑옷";
+            instance.itemList[5].defens = 9;
+            instance.itemList[5].price = 3500;
+            instance.itemList[5].info = "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.";
+            instance.itemList[5].type = "A";
 
-            instance.item[7].name = "청동 도끼";
-            instance.item[7].damage = 5;
-            instance.item[7].price = 1500;
-            instance.item[7].info = "어디선가 사용됐던거 같은 도끼입니다.";
-            instance.item[7].type = "W";
+            instance.itemList[6].name = "낡은 검";
+            instance.itemList[6].damage = 2;
+            instance.itemList[6].price = 600;
+            instance.itemList[6].info = "쉽게 볼 수 있는 낡은 검 입니다.";
+            instance.itemList[6].type = "W";
 
-            instance.item[8].name = "스파르타의 창";
-            instance.item[8].damage = 7;
-            instance.item[8].price = 3000;
-            instance.item[8].info = "스파르타의 전사들이 사용했다는 전설의 창입니다.";
-            instance.item[8].type = "W";
+            instance.itemList[7].name = "청동 도끼";
+            instance.itemList[7].damage = 5;
+            instance.itemList[7].price = 1500;
+            instance.itemList[7].info = "어디선가 사용됐던거 같은 도끼입니다.";
+            instance.itemList[7].type = "W";
 
-            instance.item[9].name = "엑스칼리버";
-            instance.item[9].damage = 20;
-            instance.item[9].price = 10000;
-            instance.item[9].info = "아서왕이 사용했던 전설의 검입니다.";
-            instance.item[9].type = "W";
+            instance.itemList[8].name = "스파르타의 창";
+            instance.itemList[8].damage = 7;
+            instance.itemList[8].price = 3000;
+            instance.itemList[8].info = "스파르타의 전사들이 사용했다는 전설의 창입니다.";
+            instance.itemList[8].type = "W";
 
-            instance.item[10].name = "해신작쇼";
-            instance.item[10].defens = 20;
-            instance.item[10].price = 10000;
-            instance.item[10].info = "이상한 기운을 내뿜는 방어구 입니다.";
-            instance.item[10].type = "A";
+            instance.itemList[9].name = "엑스칼리버";
+            instance.itemList[9].damage = 20;
+            instance.itemList[9].price = 10000;
+            instance.itemList[9].info = "아서왕이 사용했던 전설의 검입니다.";
+            instance.itemList[9].type = "W";
+
+            instance.itemList[10].name = "해신작쇼";
+            instance.itemList[10].defens = 20;
+            instance.itemList[10].price = 10000;
+            instance.itemList[10].info = "이상한 기운을 내뿜는 방어구 입니다.";
+            instance.itemList[10].type = "A";
         }
 
         //시작 아이템 획득
@@ -126,9 +131,9 @@ namespace SpartaTextRPG
         {
             int count = 0;
             count++;
-            instance.inven.Add(instance.item[0]);
-            instance.inven.Add(instance.item[1]);
-            instance.inven.Add(instance.item[2]);
+            instance.inven.Add(instance.itemList[0]);
+            instance.inven.Add(instance.itemList[1]);
+            instance.inven.Add(instance.itemList[2]);
 
             UpdateInven_W();
             UpdateInven_A();

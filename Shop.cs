@@ -37,7 +37,7 @@ namespace SpartaTextRPG
         {
             for (int i = 3; i <= 10; i++)
             {
-                instance.product.Add(Inventory.instance.item[i]);
+                instance.product.Add(Inventory.instance.itemList[i]);
             }
         }
 

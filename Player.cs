@@ -120,26 +120,28 @@ namespace SpartaTextRPG
         public void PlayerDead()
         {
             //플레이어 리셋
-            instance.level = 1;
-            instance.playerClass = "모험가";
-            instance.playerName = "르탄";
-            instance.damage = 10;
-            instance.defence = 5;
-            instance.hp = 100;
-            instance.gold = 1500;
-            instance.weapon = "미착용";
-            instance.armor = "미착용";
-            instance.equipWeponNum = 0;
-            instance.equipArmorNum = 0;
+            level = 1;
+            playerClass = "모험가";
+            playerName = "르탄";
+            damage = 10;
+            defence = 5;
+            hp = 100;
+            gold = 1500;
+            weapon = "미착용";
+            armor = "미착용";
+            equipWeponNum = 0;
+            equipArmorNum = 0;
 
             //리스트 리셋
-            instance.equipWeapon = new Item();
-            instance.equipArmor = new Item();
+            equipWeapon = new Item();
+            equipArmor = new Item();
             Inventory.instance.inven = new List<Item>();
             Inventory.instance.inven_W = new List<Item>();
             Inventory.instance.inven_A = new List<Item>();
             Inventory.instance.curArmorNum = 0;
             Inventory.instance.curWeaponNum = 0;
+            Inventory.instance.itemList = new List<Item>();
+            Inventory.instance.SetItemInfo();
             Shop.instance.product = new List<Item>();
             Shop.instance.UpdateProduct();
             Shop.instance.shopProduct = new List<Item>();
