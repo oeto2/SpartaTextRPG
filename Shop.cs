@@ -21,7 +21,7 @@ namespace SpartaTextRPG
         public Item[] shopProduct = new Item[20];
 
         //판매 아이템 리스트
-        List<Item> sellItem = new List<Item>();
+        public List<Item> sellItem = new List<Item>();
 
         //플레이어가 물품을 구매했는지
         public bool isBuy = false;

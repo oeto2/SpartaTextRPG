@@ -11,6 +11,9 @@ namespace SpartaTextRPG
     //플레이어의 정보 클래스
     public class Player
     {
+        //싱글톤
+        public static Player instance = new Player();
+
         Home home = new Home();
 
         public int level = 1;
@@ -19,7 +22,7 @@ namespace SpartaTextRPG
         public int damage = 10;
         public int defence = 5;
         public int hp = 100;
-        public int gold = 10000;
+        public int gold = 1500;
         public string weapon = "미착용";
         public string armor = "미착용";
         public int equipWeponNum = 0;
@@ -29,9 +32,6 @@ namespace SpartaTextRPG
         public Item equipWeapon = new Item();
         //착용중인 방어구 정보
         public Item equipArmor = new Item();
-
-        //싱글톤
-        public static Player instance = new Player();
 
         public int PrintPlayerInfo()
         {
@@ -85,7 +85,7 @@ namespace SpartaTextRPG
                 Console.WriteLine("착용중인 방어구 : {0}", armorName[1]);
             }
             else
-                Console.WriteLine("착용중인 방어구 : {0}",instance.equipArmor.name);
+                Console.WriteLine("착용중인 방어구 : {0}", instance.equipArmor.name);
 
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -114,6 +114,33 @@ namespace SpartaTextRPG
             }
 
             return 1;
+        }
+
+        //플레이어 사망
+        public void PlayerDead()
+        {
+            //플레이어 리셋
+            instance.level = 1;
+            instance.playerClass = "모험가";
+            instance.playerName = "르탄";
+            instance.damage = 10;
+            instance.defence = 5;
+            instance.hp = 100;
+            instance.gold = 1500;
+            instance.weapon = "미착용";
+            instance.armor = "미착용";
+            instance.equipWeponNum = 0;
+            instance.equipArmorNum = 0;
+
+            ////리스트 리셋
+            //Inventory.instance.inven = new List<Item>();
+            //Inventory.instance.inven_W = new List<Item>();
+            //Inventory.instance.inven_A = new List<Item>();
+            //Inventory.instance.curArmorNum = 0;
+            //Inventory.instance.curWeaponNum = 0;
+            //Shop.instance.shopProduct = new Item[20];
+            //Shop.instance.UpdateProduct();
+            //Shop.instance.sellItem = new List<Item>();
         }
     }
 }
