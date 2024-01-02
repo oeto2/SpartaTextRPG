@@ -22,6 +22,8 @@ namespace SpartaTextRPG
 
         //던전 클리어 여부
         public bool beClear = true;
+        //플레이어가 사망했는지
+        public bool beDead = false;
 
         //던전 입구
         public int PrintDungeonGate()
@@ -85,6 +87,7 @@ namespace SpartaTextRPG
         {
             //플레이어 사망시 입력 값
             int d_input = 4;
+            int dd_input = 4;
 
             Console.Clear();
 
@@ -122,9 +125,14 @@ namespace SpartaTextRPG
             //Null입력 체크
             if (home.CheckNullEnter(input))
             {
-                if (beClear)
+                if (beDead)
+                {
+                    DeadInput();
+                    return 0;
+                }
+                if (beClear && !beDead)
                     ClearInput(beHp, beGold, beLevel);
-                else
+                else if(!beClear && !beDead)
                     FailInput(beHp, beLevel);
             }
             else
@@ -141,6 +149,13 @@ namespace SpartaTextRPG
 
                     default:
                         System_.instance.isInputWrong = true;
+                        if (beDead)
+                        {
+                            dd_input = DeadInput();
+                            if (dd_input == 0)
+                                return 0;
+                            break;
+                        }
                         if (beClear)
                             ClearInput(beHp, beGold, beLevel);
                         else
@@ -164,6 +179,7 @@ namespace SpartaTextRPG
             {
                 //쉬운 던전
                 case 1:
+                    beDead = false;
                     //던전 권장 방어력
                     int needDefence = 5;
                     //던전 클리어 여부
@@ -220,8 +236,9 @@ namespace SpartaTextRPG
                         if (Player.instance.hp < 1)
                         {
                             isDead = true;
+                            beDead = true;
                             Console.Clear();
-                            Console.WriteLine("게임 오버");
+                            Console.WriteLine("******게임 오버******");
                             Console.WriteLine("플레이어가 사망했습니다.");
                             Player.instance.PlayerDead();
                             return 0;
@@ -247,6 +264,7 @@ namespace SpartaTextRPG
 
                 //일반 던전
                 case 2:
+                    beDead = false;
                     //던전 권장 방어력
                     needDefence = 11;
                     //던전 클리어 여부
@@ -299,12 +317,12 @@ namespace SpartaTextRPG
                         instance.beGold = _curGold;
                         instance.beLevel = 2;
 
-
                         //플레이어 사망
                         if (Player.instance.hp < 1)
                         {
+                            beDead = true;
                             Console.Clear();
-                            Console.WriteLine("게임 오버");
+                            Console.WriteLine("******게임 오버******");
                             Console.WriteLine("플레이어가 사망했습니다.");
                         }
                     }
@@ -326,7 +344,9 @@ namespace SpartaTextRPG
                     }
                     break;
 
+                //어려운 던전
                 case 3:
+                    beDead = false;
                     //던전 권장 방어력
                     needDefence = 17;
                     //던전 클리어 여부
@@ -383,7 +403,8 @@ namespace SpartaTextRPG
                         if (Player.instance.hp < 1)
                         {
                             Console.Clear();
-                            Console.WriteLine("게임 오버");
+                            beDead = true;
+                            Console.WriteLine("******게임 오버******");
                             Console.WriteLine("플레이어가 사망했습니다.");
                         }
                     }
@@ -412,12 +433,48 @@ namespace SpartaTextRPG
                 return 0;
         }
 
+        //플레이어 사망 후 입력을 잘못 받을 경우
+        public int DeadInput()
+        {
+            Console.Clear();
+            Console.WriteLine("******게임 오버******");
+            Console.WriteLine("플레이어가 사망했습니다.");
+            Console.WriteLine();
+            Console.WriteLine("0. 새로시작");
+            Console.WriteLine();
+            Console.WriteLine("******잘못된 입력입니다!*******");
+            Console.WriteLine("원하시는 행동을 입력해주세요");
+            Console.Write(">>");
+
+            string input = Console.ReadLine();
+
+            //Null입력 체크
+            if (home.CheckNullEnter(input))
+                DeadInput();
+            else
+            {
+                switch (int.Parse(input))
+                {
+                    //나가기
+                    case 0:
+                        System_.instance.isInputWrong = false;
+                        return 0;
+
+                    default:
+                        System_.instance.isInputWrong = true;
+                        DeadInput();
+                        break;
+                }
+            }
+            return 0;
+        }
+
         //던전 실패 후 잘못 입력했을 경우
         public int FailInput(int _beHp, int _beLevel)
         {
             Console.Clear();
             Console.WriteLine("던전 클리어 실패..");
-            switch(_beLevel)
+            switch (_beLevel)
             {
                 case 1:
                     Console.WriteLine("쉬운 던전을 클리어하지 못했습니다.");
@@ -442,7 +499,7 @@ namespace SpartaTextRPG
 
             //Null입력 체크
             if (home.CheckNullEnter(input))
-                FailInput(_beHp,beLevel);
+                FailInput(_beHp, beLevel);
             else
             {
                 switch (int.Parse(input))
@@ -451,6 +508,7 @@ namespace SpartaTextRPG
                     case 0:
                         System_.instance.isInputWrong = false;
                         return 0;
+
                     default:
                         System_.instance.isInputWrong = true;
                         FailInput(_beHp, beLevel);
