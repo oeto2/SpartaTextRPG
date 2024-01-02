@@ -14,7 +14,7 @@ namespace SpartaTextRPG
     public class Item
     {
         //아이템 이름
-        public string name;
+        public string name = "미착용";
         //공격력
         public int damage = 0;
         //방어력
@@ -143,7 +143,7 @@ namespace SpartaTextRPG
         //무기 리스트 갱신
         public void UpdateInven_W()
         {
-            if(instance.curWeaponNum == 0)
+            if (instance.curWeaponNum == 0)
             {
                 foreach (Item i in instance.inven)
                 {
@@ -345,7 +345,7 @@ namespace SpartaTextRPG
             //무기 리스트 보여주기
             Console.WriteLine();
             Console.WriteLine("[무기]");
-            foreach(Item i in instance.inven_W)
+            foreach (Item i in instance.inven_W)
             {
                 Console.WriteLine("- {0} | 공격력 +{1} | {2}", i.name, i.damage, i.info);
             }
@@ -445,13 +445,11 @@ namespace SpartaTextRPG
             int weaponCount = 1;
 
             //무기 아이템 보유 목록
-            foreach (var item in instance.inven)
+            foreach (var item in instance.inven_W)
             {
-                if (item.type == "W")
-                {
-                    Console.WriteLine("- {3}.{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info, weaponCount);
-                    weaponCount++;
-                }
+
+                Console.WriteLine("- {3}.{0} | 공격력 +{1} | {2}", item.name, item.damage, item.info, weaponCount);
+                weaponCount++;
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -511,13 +509,10 @@ namespace SpartaTextRPG
             int armorCount = 1;
 
             //방어구 아이템 보유 목록
-            foreach (var item in instance.inven)
+            foreach (var item in instance.inven_A)
             {
-                if (item.type == "A")
-                {
-                    Console.WriteLine("- {3}.{0} | 방어력 +{1} | {2}", item.name, item.defens, item.info, armorCount);
-                    armorCount++;
-                }
+                Console.WriteLine("- {3}.{0} | 방어력 +{1} | {2}", item.name, item.defens, item.info, armorCount);
+                armorCount++;
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");

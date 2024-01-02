@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace SpartaTextRPG
 {
@@ -15,6 +16,7 @@ namespace SpartaTextRPG
         Home home = new Home();
 
         public List<Item> product = new List<Item>();
+
 
         //상점 물품 리스트
         public Item[] shopProduct = new Item[20];
@@ -224,6 +226,9 @@ namespace SpartaTextRPG
         //상점 판매창 
         public int PrintShop_Sell()
         {
+            //판매 아이템 리스트
+            List<Item> sellItem = new List<Item>();
+
             Console.Clear();
 
             Console.WriteLine("상점 - 아이템 판매");
@@ -240,7 +245,8 @@ namespace SpartaTextRPG
             Console.WriteLine("[무기]");
             foreach (Item i in Inventory.instance.inven_W)
             {
-                Console.WriteLine("-{3}.{0} | 공격력 +{1} | {2}", i.name, i.damage, i.info, itemNum);
+                sellItem.Add(i);
+                Console.WriteLine("-{3}.{0} | 공격력 +{1} | {2} | {4} G", i.name, i.damage, i.info, itemNum, i.price);
                 itemNum++;
             }
 
@@ -249,7 +255,8 @@ namespace SpartaTextRPG
             Console.WriteLine("[방어구]");
             foreach (Item i in Inventory.instance.inven_A)
             {
-                Console.WriteLine("-{3}.{0} | 방어력 +{1} | {2}", i.name, i.defens, i.info, itemNum);
+                sellItem.Add(i);
+                Console.WriteLine("-{3}.{0} | 방어력 +{1} | {2} | {4} G", i.name, i.defens, i.info, itemNum, i.price);
                 itemNum++;
             }
             Console.WriteLine();
@@ -272,7 +279,7 @@ namespace SpartaTextRPG
                 if (isHave && int.Parse(input) != 0)
                 {
                     //해당아이템 판매
-                    //BuyProduct(int.Parse(input));
+                    SellProduct(sellItem[(int.Parse(input) - 1)]);
                 }
 
                 switch (int.Parse(input))
@@ -365,6 +372,49 @@ namespace SpartaTextRPG
                 itemCount++;
             }
         }
-    }
 
+        //아이템 판매
+        public void SellProduct(Item _item)
+        {
+            //무기 아이템일 경우
+            if(_item.type == "W")
+            {
+                for(int i = Inventory.instance.inven_W.Count - 1; i >=0; i--)
+                {
+                    //판매하려는 아이템이 무기 인벤토리에 존재
+                    if (_item.name == Inventory.instance.inven_W[i].name)
+                    {
+                        //착용중인 무기 였다면
+                        if(_item.name.Contains("[E]"))
+                        {
+                            //플레이어의 정보에도 변경사항 업데이트 해줌
+                            Player.instance.equipWeapon = new Item();
+                            Player.instance.damage -= _item.damage;
+                        }
+
+                        //해당 아이템 판매 가격만큼 획득.
+                        Player.instance.gold += _item.price;
+                        //아이템 제거
+                        Inventory.instance.inven_W.RemoveAt(i);
+                    }
+                }
+            }
+            
+            //방어구 아이템일 경우
+            else if(_item.type == "A")
+            {
+                for (int i = Inventory.instance.inven_A.Count - 1; i >= 0; i--)
+                {
+                    //판매하려는 아이템이 방어구 인벤토리에 존재
+                    if (_item.name == Inventory.instance.inven_A[i].name)
+                    {
+                        //해당 아이템 판매 가격만큼 획득.
+                        Player.instance.gold += _item.price;
+                        //아이템 제거
+                        Inventory.instance.inven_A.RemoveAt(i);
+                    }
+                }
+            }
+        }
+    }
 }

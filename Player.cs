@@ -77,7 +77,7 @@ namespace SpartaTextRPG
                 Console.WriteLine("착용중인 무기 : {0}", weaponName[1]);
             }
             else
-                Console.WriteLine("착용중인 무기 : {0}", weapon);
+                Console.WriteLine("착용중인 무기 : {0}", instance.equipWeapon.name);
 
             if (instance.equipArmor.defens != 0)
             {
@@ -85,7 +85,7 @@ namespace SpartaTextRPG
                 Console.WriteLine("착용중인 방어구 : {0}", armorName[1]);
             }
             else
-                Console.WriteLine("착용중인 방어구 : {0}", armor);
+                Console.WriteLine("착용중인 방어구 : {0}",instance.equipArmor.name);
 
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
