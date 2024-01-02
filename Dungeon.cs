@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +27,8 @@ namespace SpartaTextRPG
             Console.WriteLine("3. 어려운 던전 | 방어력 17 이상 권장");
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
+            if(System_.instance.isInputWrong)
+                Console.WriteLine("******잘못된 입력입니다!*******");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.Write(">>");
 
@@ -62,6 +66,94 @@ namespace SpartaTextRPG
                         return 4;
                 }
             }
+        }
+
+        //던전 클리어
+        public void PrintClearDungeon(int _dungeonLevel , int _curHP, int _curGold)
+        {
+            Console.Clear();
+            Console.WriteLine("축하합니다!!");
+
+            //던전 난이도별 동작
+            switch(_dungeonLevel)
+            {
+                //쉬운 던전
+                case 1:
+
+                    break;
+                    
+            }
+            
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("원하시는 행동을 입력해주세요");
+            Console.Write(">>");
+        }
+
+        //던전 난이도별 동작
+        public void EnterToDungeon (int _dungeonLevel, int _curHP, int _curGold)
+        {
+            switch(_dungeonLevel)
+            {
+                //난이도 별로 동작 구현
+                case 1:
+                    //던전 권장 방어력
+                    int needDefence = 5;
+                    //던전 클리어 여부
+                    bool isClaer = false;
+
+                    Console.WriteLine("쉬운 던전을 클리어 하였습니다.");
+                    Console.WriteLine();
+                    Console.WriteLine("[탐험 결과]");
+
+                    //권장 방어력 보다 낮다면
+                    if (Player.instance.defence < needDefence)
+                    {
+                        //40% 확률로 던전 실패
+                        Random rand = new Random();
+                        int num = rand.Next(5); //0,1,2,3,4
+                        if (num < 1)
+                            isClaer = true;
+                        else
+                            isClaer = false;
+                    }
+                    else
+                        isClaer = true;
+
+                    //던전 클리어 시
+                    if(isClaer)
+                    {
+                        Random rand = new Random();
+                        //방어력 차이
+                        int defence_dff = needDefence - Player.instance.defence;
+
+                        //방어력 비례로 체력 감소
+                        int minusHp = rand.Next(20 + defence_dff,36 + defence_dff);
+                        Console.WriteLine("체력 {0} -> {1}", _curHP, _curHP - minusHp);
+
+                        Player.instance.hp -= minusHp;
+                    }
+
+                    //던전 실패
+                    else
+                    {
+                        //체력 절반 감소
+                        Console.WriteLine("체력 {0} -> {1}", _curHP, _curHP /2);
+                        Player.instance.hp /= 2;
+                    }
+
+                    break;
+                case 2:
+                    Console.WriteLine("일반 던전을 클리어 하였습니다.");
+                    break;
+                case 3:
+                    Console.WriteLine("어려운 던전을 클리어 하였습니다.");
+                    break;
+            }
+           
+            Console.WriteLine("체력 {0} -> {1}", _curHP);
+            Console.WriteLine("Gold {0} G -> {1} G", _curGold);
         }
     }
 }
