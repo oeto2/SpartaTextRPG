@@ -407,9 +407,16 @@ namespace SpartaTextRPG
                         //착용중인 무기 였다면
                         if (_item.name.Contains("[E]"))
                         {
+                            string[] itemName = _item.name.Split("[E]");
+
                             //플레이어의 정보에도 변경사항 업데이트 해줌
                             Player.instance.equipWeapon = new Item();
                             Player.instance.damage -= _item.damage;
+
+                            //상점 표기에도 수정
+                            Item findItem = instance.product.Find(x => x.name.Equals(_item.name));
+                            if (findItem != null)
+                                findItem.name = itemName[1];
                         }
 
                         //상점 판매리스트 업데이트
@@ -435,9 +442,16 @@ namespace SpartaTextRPG
                         //착용중인 방어구 였다면
                         if (_item.name.Contains("[E]"))
                         {
+                            string[] itemName = _item.name.Split("[E]");
+
                             //플레이어의 정보에도 변경사항 업데이트 해줌
                             Player.instance.equipArmor = new Item();
                             Player.instance.defence -= _item.defens;
+
+                            //상점 표기에도 수정
+                            Item findItem = instance.product.Find(x => x.name.Equals(_item.name));
+                            if (findItem != null)
+                                findItem.name = itemName[1];
                         }
 
                         //상점 판매리스트 업데이트
