@@ -75,7 +75,8 @@ namespace SpartaTextRPG
         //던전 클리어
         public int PrintClearDungeon(int _dungeonLevel, int _curHP, int _curGold)
         {
-            int input = 4;
+            //플레이어 사망시 입력 값
+            int d_input = 4;
 
             Console.Clear();
 
@@ -84,7 +85,7 @@ namespace SpartaTextRPG
             {
                 //쉬운 던전
                 case 1:
-                    input = DungeonManager(_dungeonLevel, _curHP, _curGold);
+                    d_input = DungeonManager(_dungeonLevel, _curHP, _curGold);
                     break;
 
                 //일반 던전
@@ -99,16 +100,37 @@ namespace SpartaTextRPG
             }
 
             Console.WriteLine();
-            if (input == 0)
+            if (d_input == 0)
                 Console.WriteLine("0. 새로시작");
             else
                 Console.WriteLine("0. 나가기");
             Console.WriteLine();
+            if (System_.instance.isInputWrong)
+                Console.WriteLine("******잘못된 입력입니다!*******");
             Console.WriteLine("원하시는 행동을 입력해주세요");
             Console.Write(">>");
-            Console.ReadLine();
+            string input = Console.ReadLine();
 
-            return input;
+            //Null입력 체크
+            if (home.CheckNullEnter(input))
+                return 4;
+            else
+            {
+                switch (int.Parse(input))
+                {
+                    //나가기
+                    case 0:
+                        System_.instance.isInputWrong = false;
+                        if (d_input == 0)
+                            return 0;
+                        else
+                            return 4;
+
+                    default:
+                        System_.instance.isInputWrong = true;
+                        return 4;
+                }
+            }
         }
 
         //던전 난이도별 동작
