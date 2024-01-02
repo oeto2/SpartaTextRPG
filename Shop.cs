@@ -416,8 +416,10 @@ namespace SpartaTextRPG
                         sellItem.Remove(_item);
                         //해당 아이템 판매 가격만큼 획득.
                         Player.instance.gold += _item.price;
+                        Inventory.instance.curWeaponNum--;
                         //아이템 제거
                         Inventory.instance.inven_W.RemoveAt(i);
+                        Inventory.instance.inven.Remove(_item);
                     }
                 }
             }
@@ -442,8 +444,10 @@ namespace SpartaTextRPG
                         sellItem.Remove(_item);
                         //해당 아이템 판매 가격만큼 획득.
                         Player.instance.gold += _item.price;
+                        Inventory.instance.curArmorNum--;
                         //아이템 제거
                         Inventory.instance.inven_A.RemoveAt(i);
+                        Inventory.instance.inven.Remove(_item);
                     }
                 }
             }
