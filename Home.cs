@@ -81,8 +81,8 @@ namespace SpartaTextRPG
 
                     //휴식 하기
                     case 5:
-                        //던전 입장
-                        input = Dungeon.instance.PrintDungeonGate();
+                        //휴식 하기
+                        input = Rest.instance.PrintRest();
                         break;
                 }
             }
@@ -99,6 +99,7 @@ namespace SpartaTextRPG
                 Console.WriteLine("2. 인벤토리");
                 Console.WriteLine("3. 상점");
                 Console.WriteLine("4. 던전입장");
+                Console.WriteLine("5. 휴식하기");
                 Console.WriteLine();
                 if (System_.instance.isInputWrong)
                     Console.WriteLine("******잘못된 입력입니다!*******");
