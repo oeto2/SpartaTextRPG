@@ -15,6 +15,14 @@ namespace SpartaTextRPG
 
         Home home = new Home();
 
+        //이전 던전 데이터
+        public int beHp = 0;
+        public int beGold = 0;
+        public int beLevel = 0;
+
+        //던전 클리어 여부
+        public bool beClear = true;
+
         //던전 입구
         public int PrintDungeonGate()
         {
@@ -113,7 +121,12 @@ namespace SpartaTextRPG
 
             //Null입력 체크
             if (home.CheckNullEnter(input))
-                return 4;
+            {
+                if (beClear)
+                    ClearInput(beHp, beGold, beLevel);
+                else
+                    FailInput(beHp, beLevel);
+            }
             else
             {
                 switch (int.Parse(input))
@@ -128,16 +141,22 @@ namespace SpartaTextRPG
 
                     default:
                         System_.instance.isInputWrong = true;
-                        return 4;
+                        if (beClear)
+                            ClearInput(beHp, beGold, beLevel);
+                        else
+                            FailInput(beHp, beLevel);
+                        break;
                 }
             }
+
+            return 4;
         }
 
         //던전 난이도별 동작
         public int DungeonManager(int _dungeonLevel, int _curHP, int _curGold)
         {
             //던전 클리어 여부
-            bool isClaer = false;
+            bool isClaer = true;
             //플레이어가 죽었는지
             bool isDead = false;
 
@@ -149,6 +168,7 @@ namespace SpartaTextRPG
                     int needDefence = 5;
                     //던전 클리어 여부
                     isClaer = false;
+
 
                     //던전 클리어 조건 미달
                     if (Player.instance.defence < needDefence)
@@ -167,6 +187,7 @@ namespace SpartaTextRPG
                     //던전 클리어 시
                     if (isClaer)
                     {
+                        instance.beClear = true;
                         //클리어 골드
                         int clearGold = 1700;
 
@@ -191,6 +212,10 @@ namespace SpartaTextRPG
                         Player.instance.hp -= minusHp;
                         Player.instance.gold += clearGold;
 
+                        instance.beHp = _curHP;
+                        instance.beGold = _curGold;
+                        instance.beLevel = 1;
+
                         //플레이어 사망
                         if (Player.instance.hp < 1)
                         {
@@ -206,6 +231,10 @@ namespace SpartaTextRPG
                     //던전 실패
                     else
                     {
+                        instance.beLevel = 1;
+                        instance.beClear = false;
+
+                        instance.beHp = _curHP;
                         Console.WriteLine("던전 클리어 실패..");
                         Console.WriteLine("쉬운 던전을 클리어하지 못했습니다.");
                         Console.WriteLine();
@@ -214,7 +243,6 @@ namespace SpartaTextRPG
                         Console.WriteLine("체력 {0} -> {1}", _curHP, _curHP / 2);
                         Player.instance.hp /= 2;
                     }
-
                     break;
 
                 //일반 던전
@@ -241,6 +269,8 @@ namespace SpartaTextRPG
                     //던전 클리어 시
                     if (isClaer)
                     {
+                        instance.beClear = true;
+
                         //클리어 골드
                         int clearGold = 1700;
 
@@ -265,6 +295,11 @@ namespace SpartaTextRPG
                         Player.instance.hp -= minusHp;
                         Player.instance.gold += clearGold;
 
+                        instance.beHp = _curHP;
+                        instance.beGold = _curGold;
+                        instance.beLevel = 2;
+
+
                         //플레이어 사망
                         if (Player.instance.hp < 1)
                         {
@@ -277,6 +312,10 @@ namespace SpartaTextRPG
                     //던전 실패
                     else
                     {
+                        instance.beLevel = 2;
+                        instance.beClear = false;
+
+                        instance.beHp = _curHP;
                         Console.WriteLine("던전 클리어 실패..");
                         Console.WriteLine("일반 던전을 클리어하지 못했습니다.");
                         Console.WriteLine();
@@ -286,6 +325,7 @@ namespace SpartaTextRPG
                         Player.instance.hp /= 2;
                     }
                     break;
+
                 case 3:
                     //던전 권장 방어력
                     needDefence = 17;
@@ -309,6 +349,8 @@ namespace SpartaTextRPG
                     //던전 클리어 시
                     if (isClaer)
                     {
+                        instance.beClear = true;
+
                         //클리어 골드
                         int clearGold = 2500;
 
@@ -333,6 +375,10 @@ namespace SpartaTextRPG
                         Player.instance.hp -= minusHp;
                         Player.instance.gold += clearGold;
 
+                        instance.beHp = _curHP;
+                        instance.beGold = _curGold;
+                        instance.beLevel = 3;
+
                         //플레이어 사망
                         if (Player.instance.hp < 1)
                         {
@@ -345,6 +391,10 @@ namespace SpartaTextRPG
                     //던전 실패
                     else
                     {
+                        instance.beClear = false;
+                        instance.beLevel = 3;
+
+                        instance.beHp = _curHP;
                         Console.WriteLine("던전 클리어 실패..");
                         Console.WriteLine("어려운 던전을 클리어하지 못했습니다.");
                         Console.WriteLine();
@@ -360,6 +410,108 @@ namespace SpartaTextRPG
                 return 4;
             else
                 return 0;
+        }
+
+        //던전 실패 후 잘못 입력했을 경우
+        public int FailInput(int _beHp, int _beLevel)
+        {
+            Console.Clear();
+            Console.WriteLine("던전 클리어 실패..");
+            switch(_beLevel)
+            {
+                case 1:
+                    Console.WriteLine("쉬운 던전을 클리어하지 못했습니다.");
+                    break;
+                case 2:
+                    Console.WriteLine("일반 던전을 클리어하지 못했습니다.");
+                    break;
+                case 3:
+                    Console.WriteLine("어려운 던전을 클리어하지 못했습니다.");
+                    break;
+            }
+            Console.WriteLine();
+            Console.WriteLine("[탐험 결과]");
+            Console.WriteLine("체력 {0} -> {1}", _beHp, _beHp / 2);
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("******잘못된 입력입니다!*******");
+            Console.WriteLine("원하시는 행동을 입력해주세요");
+            Console.Write(">>");
+            string input = Console.ReadLine();
+
+            //Null입력 체크
+            if (home.CheckNullEnter(input))
+                FailInput(_beHp,beLevel);
+            else
+            {
+                switch (int.Parse(input))
+                {
+                    //나가기
+                    case 0:
+                        System_.instance.isInputWrong = false;
+                        return 0;
+                    default:
+                        System_.instance.isInputWrong = true;
+                        FailInput(_beHp, beLevel);
+                        break;
+                }
+            }
+
+            return 4;
+        }
+
+
+
+        //클리어 후 잘못 입력했을 경우
+        public int ClearInput(int _beHp, int _beGold, int _level)
+        {
+
+            Console.Clear();
+            Console.WriteLine("축하합니다!!");
+
+            switch (_level)
+            {
+                case 1:
+                    Console.WriteLine("쉬운 던전을 클리어 하였습니다.");
+                    break;
+                case 2:
+                    Console.WriteLine("일반 던전을 클리어 하였습니다.");
+                    break;
+                case 3:
+                    Console.WriteLine("어려운 던전을 클리어 하였습니다.");
+                    break;
+            }
+            Console.WriteLine();
+            Console.WriteLine("[탐험 결과]");
+            Console.WriteLine("체력 {0} -> {1}", _beHp, _beHp - (_beHp - Player.instance.hp));
+            Console.WriteLine("Gold {0} G -> {1} G", _beGold, _beGold + (Player.instance.gold - _beGold));
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.WriteLine("******잘못된 입력입니다!*******");
+            Console.WriteLine("원하시는 행동을 입력해주세요");
+            Console.Write(">>");
+            string input = Console.ReadLine();
+
+            //Null입력 체크
+            if (home.CheckNullEnter(input))
+                ClearInput(beHp, beGold, _level);
+            else
+            {
+                switch (int.Parse(input))
+                {
+                    //나가기
+                    case 0:
+                        System_.instance.isInputWrong = false;
+                        return 0;
+                    default:
+                        System_.instance.isInputWrong = true;
+                        ClearInput(beHp, beGold, _level);
+                        break;
+                }
+            }
+            return 4;
         }
     }
 }
