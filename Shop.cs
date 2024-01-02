@@ -17,9 +17,11 @@ namespace SpartaTextRPG
 
         public List<Item> product = new List<Item>();
 
-
         //상점 물품 리스트
         public Item[] shopProduct = new Item[20];
+
+        //판매 아이템 리스트
+        List<Item> sellItem = new List<Item>();
 
         //플레이어가 물품을 구매했는지
         public bool isBuy = false;
@@ -141,7 +143,7 @@ namespace SpartaTextRPG
             //아이템 번호
             int itemNum = 1;
 
-           
+
 
             //상점 방어구 목록 보여주기
             foreach (Item i in instance.product)
@@ -226,9 +228,6 @@ namespace SpartaTextRPG
         //상점 판매창 
         public int PrintShop_Sell()
         {
-            //판매 아이템 리스트
-            List<Item> sellItem = new List<Item>();
-
             Console.Clear();
 
             Console.WriteLine("상점 - 아이템 판매");
@@ -245,7 +244,13 @@ namespace SpartaTextRPG
             Console.WriteLine("[무기]");
             foreach (Item i in Inventory.instance.inven_W)
             {
-                sellItem.Add(i);
+                //이미 해당 아이템이 리스트에 존재하는지
+                Item findItem = sellItem.Find(x => x.name.Equals(i.name));
+
+                //존재하지 않다면 리스트에 추가
+                if (findItem == null)
+                    sellItem.Add(i);
+
                 Console.WriteLine("-{3}.{0} | 공격력 +{1} | {2} | {4} G", i.name, i.damage, i.info, itemNum, i.price);
                 itemNum++;
             }
@@ -255,7 +260,12 @@ namespace SpartaTextRPG
             Console.WriteLine("[방어구]");
             foreach (Item i in Inventory.instance.inven_A)
             {
-                sellItem.Add(i);
+                //이미 해당 아이템이 리스트에 존재하는지
+                Item findItem = sellItem.Find(x => x.name.Equals(i.name));
+                //존재하지 않다면 리스트에 추가
+                if (findItem == null)
+                    sellItem.Add(i);
+
                 Console.WriteLine("-{3}.{0} | 방어력 +{1} | {2} | {4} G", i.name, i.defens, i.info, itemNum, i.price);
                 itemNum++;
             }
@@ -275,7 +285,7 @@ namespace SpartaTextRPG
                 PrintShop_Buy();
             else
             {
-                bool isHave = CheckHaveProduct(int.Parse(input));
+                bool isHave = CheckSellItem(int.Parse(input));
                 if (isHave && int.Parse(input) != 0)
                 {
                     //해당아이템 판매
@@ -299,6 +309,16 @@ namespace SpartaTextRPG
             return 0;
         }
 
+        //판매리스트에 해당아이템이 존재하는지 확인
+        public bool CheckSellItem(int _sellNumber)
+        {
+            if (sellItem.Count >= _sellNumber)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         //상점에 해당 상품이 있는지 체크
         public bool CheckHaveProduct(int _itemNum)
@@ -333,7 +353,7 @@ namespace SpartaTextRPG
                     if (Player.instance.gold >= i.price)
                     {
                         //사려는 아이템이 이미 판매되었는지 확인
-                        if(i.isSell)
+                        if (i.isSell)
                         {
                             isAreadySell = true;
                             isBuy = false;
@@ -355,7 +375,7 @@ namespace SpartaTextRPG
                     else
                     {
                         //이미 판매된 아이템이라면
-                        if(i.isSell)
+                        if (i.isSell)
                         {
                             isAreadySell = true;
                             enughMoney = true;
@@ -377,21 +397,23 @@ namespace SpartaTextRPG
         public void SellProduct(Item _item)
         {
             //무기 아이템일 경우
-            if(_item.type == "W")
+            if (_item.type == "W")
             {
-                for(int i = Inventory.instance.inven_W.Count - 1; i >=0; i--)
+                for (int i = Inventory.instance.inven_W.Count - 1; i >= 0; i--)
                 {
                     //판매하려는 아이템이 무기 인벤토리에 존재
                     if (_item.name == Inventory.instance.inven_W[i].name)
                     {
                         //착용중인 무기 였다면
-                        if(_item.name.Contains("[E]"))
+                        if (_item.name.Contains("[E]"))
                         {
                             //플레이어의 정보에도 변경사항 업데이트 해줌
                             Player.instance.equipWeapon = new Item();
                             Player.instance.damage -= _item.damage;
                         }
 
+                        //상점 판매리스트 업데이트
+                        sellItem.Remove(_item);
                         //해당 아이템 판매 가격만큼 획득.
                         Player.instance.gold += _item.price;
                         //아이템 제거
@@ -399,15 +421,25 @@ namespace SpartaTextRPG
                     }
                 }
             }
-            
+
             //방어구 아이템일 경우
-            else if(_item.type == "A")
+            else if (_item.type == "A")
             {
                 for (int i = Inventory.instance.inven_A.Count - 1; i >= 0; i--)
                 {
                     //판매하려는 아이템이 방어구 인벤토리에 존재
                     if (_item.name == Inventory.instance.inven_A[i].name)
                     {
+                        //착용중인 방어구 였다면
+                        if (_item.name.Contains("[E]"))
+                        {
+                            //플레이어의 정보에도 변경사항 업데이트 해줌
+                            Player.instance.equipArmor = new Item();
+                            Player.instance.defence -= _item.defens;
+                        }
+
+                        //상점 판매리스트 업데이트
+                        sellItem.Remove(_item);
                         //해당 아이템 판매 가격만큼 획득.
                         Player.instance.gold += _item.price;
                         //아이템 제거
