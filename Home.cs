@@ -73,6 +73,12 @@ namespace SpartaTextRPG
                         //상점 정보 출력
                         input = Shop.instance.PrintShop();
                         break;
+
+                    //던전 입장
+                    case 4:
+                        //던전 입장
+                        input = Dungeon.instance.PrintDungeonGate();
+                        break;
                 }
             }
 
@@ -87,6 +93,7 @@ namespace SpartaTextRPG
                 Console.WriteLine("1. 상태 보기");
                 Console.WriteLine("2. 인벤토리");
                 Console.WriteLine("3. 상점");
+                Console.WriteLine("4. 던전입장");
                 Console.WriteLine();
                 if (System_.instance.isInputWrong)
                 {
@@ -117,6 +124,11 @@ namespace SpartaTextRPG
 
                         //상점 창 이동
                         case 3:
+                            System_.instance.isInputWrong = false;
+                            return int.Parse(input);
+
+                        //던전 이동
+                        case 4:
                             System_.instance.isInputWrong = false;
                             return int.Parse(input);
 
