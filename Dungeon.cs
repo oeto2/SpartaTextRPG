@@ -221,12 +221,13 @@ namespace SpartaTextRPG
                         Console.WriteLine("체력 {0} -> {1}", _curHP, _curHP - minusHp);
 
                         //공격력 비례로 골드 추가 획득
-                        int addGold = rand.Next(Player.instance.damage, Player.instance.damage * 2);
+                        int addGold = rand.Next((int)Player.instance.damage, (int)Player.instance.damage * 2);
                         clearGold += addGold;
                         Console.WriteLine("Gold {0} G -> {1} G", _curGold, _curGold + clearGold);
 
                         Player.instance.hp -= minusHp;
                         Player.instance.gold += clearGold;
+                        Player.instance.GetExp();
 
                         instance.beHp = _curHP;
                         instance.beGold = _curGold;
@@ -306,12 +307,14 @@ namespace SpartaTextRPG
                         Console.WriteLine("체력 {0} -> {1}", _curHP, _curHP - minusHp);
 
                         //공격력 비례로 골드 추가 획득
-                        int addGold = rand.Next(Player.instance.damage, Player.instance.damage * 2);
+                        int addGold = rand.Next((int)Player.instance.damage, (int)Player.instance.damage * 2);
                         clearGold += addGold;
                         Console.WriteLine("Gold {0} G -> {1} G", _curGold, _curGold + clearGold);
 
                         Player.instance.hp -= minusHp;
                         Player.instance.gold += clearGold;
+                        Player.instance.GetExp();
+
 
                         instance.beHp = _curHP;
                         instance.beGold = _curGold;
@@ -388,12 +391,13 @@ namespace SpartaTextRPG
                         Console.WriteLine("체력 {0} -> {1}", _curHP, _curHP - minusHp);
 
                         //공격력 비례로 골드 추가 획득
-                        int addGold = rand.Next(Player.instance.damage, Player.instance.damage * 2);
+                        int addGold = rand.Next((int)Player.instance.damage, (int)Player.instance.damage * 2);
                         clearGold += addGold;
                         Console.WriteLine("Gold {0} G -> {1} G", _curGold, _curGold + clearGold);
 
                         Player.instance.hp -= minusHp;
                         Player.instance.gold += clearGold;
+                        Player.instance.GetExp();
 
                         instance.beHp = _curHP;
                         instance.beGold = _curGold;

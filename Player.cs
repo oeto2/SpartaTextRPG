@@ -19,7 +19,7 @@ namespace SpartaTextRPG
         public int level = 1;
         public string playerClass = "모험가";
         public string playerName = "르탄";
-        public int damage = 10;
+        public float damage = 10;
         public int defence = 5;
         public int hp = 100;
         public int gold = 1500;
@@ -27,7 +27,8 @@ namespace SpartaTextRPG
         public string armor = "미착용";
         public int equipWeponNum = 0;
         public int equipArmorNum = 0;
-
+        public int exp = 0;
+        public int needExp = 1;
         //착용중인 무기 정보
         public Item equipWeapon = new Item();
         //착용중인 방어구 정보
@@ -58,9 +59,19 @@ namespace SpartaTextRPG
             Console.WriteLine("{0} ({1})", playerName, instance.playerClass);
 
             if (instance.equipWeapon.damage != 0)
-                Console.WriteLine("공격력: {0} (+{1})", instance.damage, instance.equipWeapon.damage);
+            {
+                if (instance.damage % 1 != 0)
+                    Console.WriteLine("공격력: {0} (+{1})", instance.damage.ToString("F1"), instance.equipWeapon.damage);
+                else
+                    Console.WriteLine("공격력: {0} (+{1})", (int)instance.damage, instance.equipWeapon.damage);
+            }
             else
-                Console.WriteLine("공격력: {0}", instance.damage);
+            {
+                if (instance.damage % 1 != 0)
+                    Console.WriteLine("공격력: {0}", instance.damage.ToString("F1"));
+                else
+                    Console.WriteLine("공격력: {0}", (int)instance.damage);
+            }
 
             if (instance.equipArmor.defens != 0)
                 Console.WriteLine("방어력: {0} (+{1})", instance.defence, instance.equipArmor.defens);
@@ -69,6 +80,7 @@ namespace SpartaTextRPG
 
             Console.WriteLine("체력: {0}", instance.hp);
             Console.WriteLine("Gold: {0}", instance.gold);
+            Console.WriteLine("Exp: {0}/{1}", instance.exp, instance.needExp);
             Console.WriteLine();
 
             if (instance.equipWeapon.damage != 0)
@@ -144,6 +156,22 @@ namespace SpartaTextRPG
             Shop.instance.UpdateProduct();
             Shop.instance.shopProduct = new List<Item>();
             Shop.instance.sellItem = new List<Item>();
+        }
+
+        //플레이어 경험치 획득
+        public void GetExp()
+        {
+            exp++;
+
+            //Level UP
+            if (exp >= needExp)
+            {
+                exp = 0;
+                needExp++;
+                level++;
+                damage += 0.5f;
+                defence++;
+            }
         }
     }
 }
