@@ -13,3 +13,17 @@ C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\n
 C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\net6.0\SpartaTextRPG.genruntimeconfig.cache
 C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\net6.0\ref\SpartaTextRPG.dll
 C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\net6.0\SpartaTextRPG.sourcelink.json
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\System.Text.Json.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\net6.0\SpartaTextRPG.csproj.AssemblyReference.cache
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\obj\Debug\net6.0\SpartaTextRPG.csproj.CopyComplete
+C:\Users\Leesangmin\Desktop\Sparta\2Week\SpartaTextRPG\SpartaTextRPG\bin\Debug\net6.0\Newtonsoft.Json.dll

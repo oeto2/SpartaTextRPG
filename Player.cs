@@ -29,6 +29,7 @@ namespace SpartaTextRPG
         public int equipArmorNum = 0;
         public int exp = 0;
         public int needExp = 1;
+
         //착용중인 무기 정보
         public Item equipWeapon = new Item();
         //착용중인 방어구 정보
