@@ -50,50 +50,42 @@ namespace SpartaTextRPG
                 {
                     //홈 화면
                     case 0:
-                        //메뉴 출력
                         input = ShowMenu(false);
                         break;
 
                     //상태 창
                     case 1:
-                        //플레이어 정보 출력
                         input = player.PrintPlayerInfo();
                         break;
 
                     //인벤토리
                     case 2:
-                        //인벤토리 정보 출력
                         input = inven.PrintInventory();
                         break;
 
                     //상점
                     case 3:
-                        //상점 정보 출력
                         input = Shop.instance.PrintShop();
                         break;
 
                     //던전 입장
                     case 4:
-                        //던전 입장
                         input = Dungeon.instance.PrintDungeonGate();
                         break;
 
                     //휴식 하기
                     case 5:
-                        //휴식 하기
                         input = Rest.instance.PrintRest();
                         break;
 
                     //저장 하기
                     case 6:
-                        System_.instance.isInputWrong = false;
-                        DataManager.instance.Save();
+                        input = DataManager.instance.PrintCheckSave();
                         break;
 
                     //불러오기
                     case 7:
-                        System_.instance.isInputWrong = false;
-                        DataManager.instance.Load();
+                        input = DataManager.instance.PrintCheckLoad();
                         break;
                 }
             }
@@ -157,14 +149,12 @@ namespace SpartaTextRPG
                         //저장하기
                         case 6:
                             System_.instance.isInputWrong = false;
-                            DataManager.instance.Save();
-                            return 0;
+                            return int.Parse(input);
 
                         //불러오기
                         case 7:
                             System_.instance.isInputWrong = false;
-                            DataManager.instance.Load();
-                            return 0;
+                            return int.Parse(input);
 
                         default:
                             System_.instance.isInputWrong = true;
