@@ -26,6 +26,7 @@ namespace SpartaTextRPG
         //저장된 데이터가 존재하는지
         bool haveData = true;
 
+        //json 파일이 저장될 경로
         string filePath = @"C:\\Users\\Leesangmin\\Desktop\\Sparta\\2Week\\SpartaTextRPG\";
 
         public int PrintCheckSave()
@@ -153,10 +154,10 @@ namespace SpartaTextRPG
         {
             haveData = true;
 
-            //데이터가 존재하는지 체크
+            //데이터 파일이 존재하는지 체크
             for (int i = 0; i < 12; i++)
             {
-                if (strJson[i] == null)
+                if (!File.Exists(filePath + "str" + i.ToString() + ".json"))
                 {
                     haveData = false;
                 }
@@ -164,7 +165,7 @@ namespace SpartaTextRPG
 
             if (haveData)
             {
-                //파일 로드하기
+                //파일을 읽어서 strJson에 넣기
                 for (int i = 0; i < 12; i++)
                 {
                     strJson[i] = File.ReadAllText(filePath + "str" + i.ToString() + ".json");
